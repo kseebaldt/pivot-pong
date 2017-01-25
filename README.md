@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/slackersoft/pivot-pong.svg?branch=master)](https://travis-ci.org/slackersoft/pivot-pong)
+
 Welcome to the World of Office Gaming
 ========
 
