@@ -1,3 +1,4 @@
 ---
 language: ruby
 before_script: cp config/database.yml{.example,} ; RAILS_ENV=test rake db:create
+cache: bundler
