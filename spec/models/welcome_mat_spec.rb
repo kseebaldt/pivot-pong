@@ -20,8 +20,8 @@ describe WelcomeMat do
     it "should be eligible if you play someone not yet on the ladder(only 1 match)" do
       me.matches.size.should == 2
       him.matches.size.should == 1
-      WelcomeMat.eligible?(me).should be_true
-      WelcomeMat.eligible?(him).should_not be_true
+      WelcomeMat.eligible?(me).should be true
+      WelcomeMat.eligible?(him).should_not be true
     end
   end
 end

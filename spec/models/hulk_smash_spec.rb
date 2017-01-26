@@ -24,8 +24,8 @@ describe HulkSmash do
       Match.create(winner: me, loser: you, occured_at: 3.days.ago)
       Match.create(winner: me, loser: you, occured_at: 2.days.ago)
       Match.create(winner: me, loser: you, occured_at: 1.days.ago)
-      HulkSmash.eligible?(me).should be_true
-      HulkSmash.eligible?(you).should be_false
+      HulkSmash.eligible?(me).should be true
+      HulkSmash.eligible?(you).should be false
     end
   end
 end

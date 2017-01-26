@@ -17,7 +17,7 @@ describe HeartYou do
       Match.create(winner: me, loser: you, occured_at: 3.days.ago)
       Match.create(winner: me, loser: you, occured_at: 2.days.ago)
       Match.create(winner: me, loser: you, occured_at: 1.days.ago)
-      HeartYou.eligible?(me).should be_true
+      HeartYou.eligible?(me).should be true
     end
   end
 end

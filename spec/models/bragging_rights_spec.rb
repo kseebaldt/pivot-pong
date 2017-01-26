@@ -13,7 +13,7 @@ describe BraggingRights do
 
   describe "#eligible" do
     it "should never be eligible" do
-      BraggingRights.eligible?(me).should be_false
+      BraggingRights.eligible?(me).should be false
     end
   end
 end

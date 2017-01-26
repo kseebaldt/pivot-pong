@@ -16,7 +16,7 @@ describe SameShtDifferentDay do
       logs = []
       7.times{ logs << Hashie::Mash.new(rank: 2) }
       me.stub_chain(:logs, :descending, :limit).and_return(logs)
-      SameShtDifferentDay.eligible?(me).should be_true
+      SameShtDifferentDay.eligible?(me).should be true
     end
   end
 end

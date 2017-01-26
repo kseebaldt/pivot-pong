@@ -20,8 +20,8 @@ describe Lemons do
       Match.create(winner: me, loser: you, occured_at: 3.days.ago)
       Match.create(winner: me, loser: you, occured_at: 2.days.ago)
       Match.create(winner: me, loser: you, occured_at: 1.days.ago)
-      Lemons.eligible?(you).should be_true
-      Lemons.eligible?(me).should be_false
+      Lemons.eligible?(you).should be true
+      Lemons.eligible?(me).should be false
     end
 
     it "should be not eligible if you don't lose 5 matches in a row" do
@@ -30,8 +30,8 @@ describe Lemons do
       Match.create(winner: you, loser: me, occured_at: 3.days.ago)
       Match.create(winner: me, loser: you, occured_at: 2.days.ago)
       Match.create(winner: me, loser: you, occured_at: 1.days.ago)
-      Lemons.eligible?(me).should be_false
-      Lemons.eligible?(you).should be_false
+      Lemons.eligible?(me).should be false
+      Lemons.eligible?(you).should be false
     end
   end
 end

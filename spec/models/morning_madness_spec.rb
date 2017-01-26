@@ -15,8 +15,8 @@ describe MorningMadness do
     let(:you) { Player.create(name: "you") }
     it "Log a match before 9am PST" do
       Match.create(winner: me, loser: you, occured_at: (Date.today.beginning_of_day + 8.hours))
-      MorningMadness.eligible?(me).should be_true
-      MorningMadness.eligible?(you).should be_true
+      MorningMadness.eligible?(me).should be true
+      MorningMadness.eligible?(you).should be true
     end
   end
 end

@@ -14,7 +14,7 @@ describe WorkingHard do
   describe "#eligible" do
     it "should be eligible if you log more than 5 matches in a single day" do
       me.stub_chain(:matches, :occurred_today, :size).and_return(6)
-      WorkingHard.eligible?(me).should be_true
+      WorkingHard.eligible?(me).should be true
     end
   end
 end

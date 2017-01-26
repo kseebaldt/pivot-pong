@@ -13,7 +13,7 @@ describe Inactive do
 
   describe "#eligible" do
     it "should never be eligible, awarded during mark as inactive" do
-      Inactive.eligible?(me).should be_false
+      Inactive.eligible?(me).should be false
     end
   end
 end

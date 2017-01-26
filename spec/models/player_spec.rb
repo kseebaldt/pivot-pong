@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 describe Player do
-  describe "downcasing names" do
-    subject { Player.create(name: "Gregg Van Hove") }
-    its(:name) { should == "gregg van hove" }
+  it 'should downcase names' do
+    expect(Player.create(name: "Gregg Van Hove").name).to eq('gregg van hove')
   end
 
   it "should validate unique names" do
@@ -25,9 +24,8 @@ describe Player do
     Player.new.should_not be_valid
   end
 
-  describe '#display_name' do
-    subject { Player.create(name: 'scooby doo') }
-    its(:display_name) { should == 'Scooby Doo' }
+  it 'should have a displayable name' do
+    expect(Player.create(name: 'scooby doo').display_name).to eq('Scooby Doo')
   end
 
   describe "ranked" do

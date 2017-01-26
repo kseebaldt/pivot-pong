@@ -30,7 +30,6 @@ class MatchObserver < ActiveRecord::Observer
     winner = match.winner
     loser = match.loser
     log1 = winner.logs.create(match: match, rank: winner.rank)
-    puts log1.errors.full_messages
     loser.logs.create(match: match, rank: loser.rank)
   end
 

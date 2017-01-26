@@ -2,10 +2,12 @@ require 'spec_helper'
 
 describe Match do
   describe "setting default date" do
-    subject { Match.create }
     let(:occured_at) { Date.new(2011, 03, 27).to_time }
     before { Time.stub(:now).and_return(occured_at) }
-    its(:occured_at) { should == occured_at }
+
+    it 'sets the default date to today' do
+      expect(Match.create.occured_at).to eq occured_at
+    end
   end
 
   describe "validations" do

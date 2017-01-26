@@ -16,8 +16,8 @@ describe NumberJuan do
     it "should be eligible if you move to 1st place" do
       me.rank.should == 1
       you.rank.should == 2
-      NumberJuan.eligible?(me).should be_true
-      NumberJuan.eligible?(you).should be_false
+      NumberJuan.eligible?(me).should be true
+      NumberJuan.eligible?(you).should be false
     end
   end
 end

@@ -13,7 +13,7 @@ describe PicturePerfect do
 
   describe "#eligible" do
     it "should never be eligible" do
-      PicturePerfect.eligible?(me).should be_false
+      PicturePerfect.eligible?(me).should be false
     end
   end
 end

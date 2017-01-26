@@ -20,8 +20,8 @@ describe Streak do
       Match.create(winner: me, loser: you, occured_at: 3.days.ago)
       Match.create(winner: me, loser: you, occured_at: 2.days.ago)
       Match.create(winner: me, loser: you, occured_at: 1.days.ago)
-      Streak.eligible?(me).should be_true
-      Streak.eligible?(you).should be_false
+      Streak.eligible?(me).should be true
+      Streak.eligible?(you).should be false
     end
 
     it "should be not eligible if you don't win 5 matches in a row" do
@@ -30,8 +30,8 @@ describe Streak do
       Match.create(winner: you, loser: me, occured_at: 3.days.ago)
       Match.create(winner: me, loser: you, occured_at: 2.days.ago)
       Match.create(winner: me, loser: you, occured_at: 1.days.ago)
-      Streak.eligible?(me).should be_false
-      Streak.eligible?(you).should be_false
+      Streak.eligible?(me).should be false
+      Streak.eligible?(you).should be false
     end
   end
 end

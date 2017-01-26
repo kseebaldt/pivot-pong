@@ -16,7 +16,7 @@ describe LongJump do
       log_1 = Hashie::Mash.new(rank: 1)
       log_2 = Hashie::Mash.new(rank: 5)
       me.stub_chain(:logs, :descending, :limit).and_return([log_1, log_2])
-      LongJump.eligible?(me).should be_true
+      LongJump.eligible?(me).should be true
     end
   end
 end

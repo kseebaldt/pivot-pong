@@ -15,7 +15,7 @@ describe HeadHunter do
     let(:you) { Player.create(name: "you") }
     it "should be eligible if your totem count is 10 or more" do
       me.stub_chain(:totems, :count).and_return(10)
-      HeadHunter.eligible?(me).should be_true
+      HeadHunter.eligible?(me).should be true
     end
   end
 end

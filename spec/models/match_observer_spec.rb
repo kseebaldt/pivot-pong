@@ -4,7 +4,7 @@ describe MatchObserver do
   let(:me) { Player.create(name: 'me') }
   let(:you) { Player.create(name: 'you') }
   let(:observer) { MatchObserver.instance }
-  let(:match) { mock_model(Match, winner: you, loser: me, occured_at: Time.current) }
+  let(:match) { Match.new(winner: you, loser: me, occured_at: Time.current) }
 
   describe "#after_save" do
     it "should make the appropriate method calls" do
@@ -39,7 +39,7 @@ describe MatchObserver do
 
   describe "#create_logs" do
     it "should create log from last match" do
-      expect { observer.send(:create_logs, match) }.to change(Log, :count).by(2)
+      expect { match.save! }.to change(Log, :count).by(2)
     end
   end
 
