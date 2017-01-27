@@ -1,4 +1,4 @@
-class MatchObserver < ActiveRecord::Observer
+class MatchObserver #< ActiveRecord::Observer
   def after_save(match)
     update_player_ranks(match)
     create_logs(match)
@@ -22,6 +22,8 @@ class MatchObserver < ActiveRecord::Observer
         player.update_attributes(rank: player.rank + 1)
       end
       winner.update_attributes(rank: new_rank, active: true)
+    else
+      winner.update_attributes(active: true)
     end
     loser.update_attributes(rank: loser_rank, active: true) if !loser.active?
   end
@@ -29,7 +31,7 @@ class MatchObserver < ActiveRecord::Observer
   def create_logs(match)
     winner = match.winner
     loser = match.loser
-    log1 = winner.logs.create(match: match, rank: winner.rank)
+    winner.logs.create(match: match, rank: winner.rank)
     loser.logs.create(match: match, rank: loser.rank)
   end
 
@@ -40,7 +42,9 @@ class MatchObserver < ActiveRecord::Observer
     winner_achievements_needed = achievements - winner.achievements.map(&:class)
     loser_achievements_needed = achievements - loser.achievements.map(&:class)
     winner_achievements_needed.each do |achievement|
-      achievement.create(player: winner, match: match) if achievement.eligible?(winner)
+      if achievement.eligible?(winner)
+        achievement.create(player: winner, match: match)
+      end
     end
     loser_achievements_needed.each do |achievement|
       achievement.create(player: loser, match: match) if achievement.eligible?(loser)
@@ -50,7 +54,7 @@ class MatchObserver < ActiveRecord::Observer
   def check_totems(match)
     winner = match.winner
     loser = match.loser
-    winner.totems.find_or_create_by_loser_id(loser.id)
+    winner.totems.find_or_create_by(loser_id: loser.id)
     loser.totems.where(loser_id: winner.id).destroy_all
   end
 
@@ -58,7 +62,7 @@ class MatchObserver < ActiveRecord::Observer
     cutoff = 30.days.ago
     Player.active.each do |player|
       if player.most_recent_match.nil? || (player.most_recent_match.occured_at < cutoff)
-        player.update_attributes :active => false
+        player.update_attributes! :active => false
         Inactive.create(player: player) if !player.achievements.map(&:class).include?(Inactive)
       end
     end

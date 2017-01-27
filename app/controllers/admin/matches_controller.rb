@@ -20,6 +20,7 @@ class Admin::MatchesController < Admin::BaseController
     }
     occured_at = params[:match].present? ? params[:match][:occured_at] : Time.current
     if @match.update_attributes winner: winner, loser: loser, occured_at: occured_at
+      MatchObserver.new.after_save @match
       flash.notice = "Match successfully updated"
       redirect_to admin_matches_path
     else
@@ -36,7 +37,9 @@ class Admin::MatchesController < Admin::BaseController
     occured_at = params[:match].present? ? params[:match][:occured_at] : Time.current
     match = Match.new winner: winner, loser: loser, occured_at: occured_at
 
-    unless [winner, loser].all?(&:valid?) && match.save
+    if [winner, loser].all?(&:valid?) && match.save
+      MatchObserver.new.after_save match
+    else
       if match.errors.present?
         flash.alert = match.errors.full_messages.join('\n')
       else

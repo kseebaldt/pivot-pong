@@ -7,7 +7,7 @@ class Log < ActiveRecord::Base
   validates :match_id, presence: true
   validate :check_for_occured_at
 
-  scope :descending, order("occured_at DESC")
+  scope :descending, lambda { order("occured_at DESC") }
 
   private
 

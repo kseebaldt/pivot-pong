@@ -13,7 +13,7 @@ class Admin::PostsController < Admin::BaseController
 
   def update
     @post = Post.find params[:id]
-    if @post.update_attributes params[:post]
+    if @post.update_attributes params.require(:post).permit(:title, :body)
       flash.notice = "Post successfully updated"
       redirect_to admin_posts_path
     else
@@ -23,7 +23,7 @@ class Admin::PostsController < Admin::BaseController
   end
 
   def create
-    @post = Post.new params[:post]
+    @post = Post.new params.require(:post).permit(:title, :body)
     if @post.save
       flash.notice = "Post successfully created"
       redirect_to admin_posts_path

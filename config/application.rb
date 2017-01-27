@@ -2,7 +2,7 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
-Bundler.require(:default, Rails.env) if defined?(Bundler)
+Bundler.require(*Rails.groups) if defined?(Bundler)
 
 module Pong
   class Application < Rails::Application
@@ -18,7 +18,7 @@ module Pong
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
     # Activate observers that should always be running.
-    config.active_record.observers = :match_observer unless File.basename($0) == 'rake' #disable observers when running rake
+    # config.active_record.observers = :match_observer unless File.basename($0) == 'rake' #disable observers when running rake
     config.assets.initialize_on_precompile = false
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.

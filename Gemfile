@@ -11,7 +11,7 @@ gem 'less-rails'
 gem 'mini_magick'
 gem 'pg'
 gem 'rake', '~> 11.0'
-gem 'rails', '< 4.0'
+gem 'rails', '~> 4.0'
 gem 'sass'
 gem 'therubyracer'
 gem 'tinymce-rails'
@@ -19,6 +19,7 @@ gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-boot
 gem 'will_paginate', '~> 3.0'
 gem 'rails_12factor'
 gem 'test-unit'
+# gem 'rails-observers'
 
 group :test, :development do
   gem 'hashie'

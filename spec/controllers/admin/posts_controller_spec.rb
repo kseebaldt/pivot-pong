@@ -1,14 +1,6 @@
 require 'spec_helper'
 
 describe Admin::PostsController do
-  describe "#index" do
-    before { get :index }
-    it 'shows all posts' do
-      expect(response).to be_success
-      expect(assigns(:posts)).to eq Post.all
-    end
-  end
-
   describe "#new" do
     before { get :new }
     it 'assigns a post for the form' do

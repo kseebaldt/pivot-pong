@@ -13,7 +13,7 @@ class Admin::PlayersController < Admin::BaseController
 
   def update
     @player = Player.find params[:id]
-    if @player.update_attributes params[:player]
+    if @player.update_attributes params.require(:player).permit(:name)
       flash.notice = "Player successfully updated"
       redirect_to admin_players_path
     else
@@ -23,7 +23,7 @@ class Admin::PlayersController < Admin::BaseController
   end
 
   def create
-    @player = Player.new params[:player]
+    @player = Player.new params.require(:player).permit(:name)
     if @player.save
       flash.notice = "Player successfully created"
       redirect_to admin_players_path

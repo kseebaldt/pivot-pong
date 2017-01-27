@@ -12,7 +12,7 @@ class Match < ActiveRecord::Base
   before_validation :set_default_occured_at_date, on: :create
 
   scope :occurred_today, lambda { |time| where("occured_at >= ? AND occured_at <= ?", time.beginning_of_day, time.end_of_day) }
-  scope :descending, order("occured_at DESC")
+  scope :descending, lambda { order("occured_at DESC") }
 
   private
 

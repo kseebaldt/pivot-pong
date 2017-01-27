@@ -46,6 +46,7 @@ describe MatchesController do
       expect(assigns(:loser)).to eq match.loser
     end
   end
+
   describe "POST #create" do
     let(:match_params) { {winner_name: "taeyang", loser_name: "se7en" } }
 
@@ -104,23 +105,21 @@ describe MatchesController do
   describe "GET #rankings" do
     let(:me) { Player.create(name: "me") }
     let(:you) { Player.create(name: "you") }
-    let(:us) { Player.create(name: "us") }
-    let(:them) { Player.create(name: "them")}
     let(:occured_at) { Time.current }
 
     it "returns the correctly ranked players" do
-      Match.create(winner: Player.create(name: "one"),
+      MatchObserver.new.after_save Match.create(winner: Player.create(name: "one"),
                    loser: Player.create(name: "two"),
                    occured_at: occured_at - 10.months)
-      Match.create(winner: Player.create(name: "bro1"),
+      MatchObserver.new.after_save Match.create(winner: Player.create(name: "bro1"),
                    loser: Player.create(name: "bro2"),
                    occured_at: occured_at - 2.months)
-      Match.create(winner: you, loser: me, occured_at: occured_at - 1.day)
-      Match.create(winner: me.reload, loser: you.reload, occured_at: occured_at)
+      MatchObserver.new.after_save Match.create(winner: you, loser: me, occured_at: occured_at - 1.day)
+      MatchObserver.new.after_save Match.create(winner: me.reload, loser: you.reload, occured_at: occured_at)
 
       get :rankings
       expect(response).to be_success
-      expect(assigns(:rankings)).to eq [me, you]
+      expect(assigns(:rankings)).to eq [me.reload, you.reload]
     end
   end
 

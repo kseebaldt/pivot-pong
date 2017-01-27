@@ -16,9 +16,9 @@ class Player < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_uniqueness_of :rank, :allow_nil => true
 
-  scope :ranked, where('rank IS NOT NULL').order('rank asc')
-  scope :active, where(:active => true)
-  scope :inactive, where(:active => false)
+  scope :ranked, lambda { where('rank IS NOT NULL').order('rank asc') }
+  scope :active, lambda { where(:active => true) }
+  scope :inactive, lambda { where(:active => false) }
 
   def display_name
     name.titleize

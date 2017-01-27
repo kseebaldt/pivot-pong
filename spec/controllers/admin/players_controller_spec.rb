@@ -1,14 +1,6 @@
 require 'spec_helper'
 
 describe Admin::PlayersController do
-  describe "#index" do
-    before { get :index }
-    it 'shows the players' do
-      expect(response).to be_success
-      expect(assigns(:players)).to eq Player.all
-    end
-  end
-
   describe "#new" do
     before { get :new }
     it 'assigns a player for the form' do

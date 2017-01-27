@@ -6,6 +6,7 @@ describe Log do
 
   it "should be created after a match" do
     match = Match.create(winner: me, loser: you)
+    MatchObserver.new.after_save match
     me_log = me.reload.logs.first
     you_log = you.reload.logs.first
     expect(me_log.match).to eq match

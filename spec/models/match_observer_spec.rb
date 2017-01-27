@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe MatchObserver do
-  let(:me) { Player.create(name: 'me') }
-  let(:you) { Player.create(name: 'you') }
-  let(:observer) { MatchObserver.instance }
+  let(:me) { Player.create!(name: 'me') }
+  let(:you) { Player.create!(name: 'you') }
+  let(:observer) { MatchObserver.new }
   let(:match) { Match.new(winner: you, loser: me, occured_at: Time.current) }
 
   describe "#after_save" do
@@ -39,7 +39,10 @@ describe MatchObserver do
 
   describe "#create_logs" do
     it "should create log from last match" do
-      expect { match.save! }.to change(Log, :count).by(2)
+      expect do
+        match.save!
+        observer.send(:create_logs, match)
+      end.to change(Log, :count).by(2)
     end
   end
 
@@ -48,7 +51,8 @@ describe MatchObserver do
       expect(Beginner).to receive(:create).at_least(:once)
       expect(me.achievements.count).to eq 0
       expect(you.achievements.count).to eq 0
-      Match.create(winner: me, loser: you)
+      match.save!
+      observer.send(:check_achievements, match)
       expect(me.achievements.count).to be > 0
       expect(you.achievements.count).to be > 0
     end
@@ -58,25 +62,28 @@ describe MatchObserver do
     it "should award a totem if winner does not own yet" do
       expect(me.totems.count).to eq 0
       expect(you.totems.count).to eq 0
-      Match.create(winner: me, loser: you)
-      expect(me.reload.totems.count).to eq 1
-      expect(you.reload.totems.count).to eq 0
+      match.save!
+      observer.send(:check_totems, match)
+      expect(you.reload.totems.count).to eq 1
+      expect(me.reload.totems.count).to eq 0
     end
 
     it "should not award a totem if winner already owns" do
       me.totems.create(loser: you)
       expect(me.reload.totems.count).to eq 1
       expect(you.reload.totems.count).to eq 0
-      Match.create(winner: me, loser: you)
-      expect(me.reload.totems.count).to eq 1
-      expect(you.reload.totems.count).to eq 0
+      match.save!
+      observer.send(:check_totems, match)
+      expect(you.reload.totems.count).to eq 1
+      expect(me.reload.totems.count).to eq 0
     end
 
     it "should remove totem from winner loser beats them" do
       me.totems.create(loser: you)
       expect(me.reload.totems.count).to eq 1
       expect(you.reload.totems.count).to eq 0
-      Match.create(winner: you, loser: me)
+      match.save!
+      observer.send(:check_totems, match)
       expect(me.reload.totems.count).to eq 0
       expect(you.reload.totems.count).to eq 1
     end

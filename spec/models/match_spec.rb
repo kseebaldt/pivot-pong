@@ -21,11 +21,17 @@ describe Match do
     let!(:p3) { Player.create(name: "p3") }
     let!(:p4) { Player.create(name: "p4") }
     let!(:p5) { Player.create(name: "p5") }
-    let!(:establishing_match1) { Match.create(winner: p1.reload, loser: p4.reload) }
-    let!(:establishing_match2) { Match.create(winner: p3.reload, loser: p4.reload) }
-    let!(:establishing_match3) { Match.create(winner: p2.reload, loser: p1.reload) }
+    let(:establishing_match1) { Match.new(winner: p1.reload, loser: p4.reload) }
+    let(:establishing_match2) { Match.new(winner: p3.reload, loser: p4.reload) }
+    let(:establishing_match3) { Match.new(winner: p2.reload, loser: p1.reload) }
 
     before do
+      establishing_match1.save!
+      MatchObserver.new.after_save(establishing_match1)
+      establishing_match2.save!
+      MatchObserver.new.after_save(establishing_match2)
+      establishing_match3.save!
+      MatchObserver.new.after_save(establishing_match3)
       expect(Match.order(:id)).to eq [establishing_match1, establishing_match2, establishing_match3]
       expect(establishing_match1.winner).to eq p1
       expect(establishing_match1.loser).to eq p4
@@ -45,7 +51,7 @@ describe Match do
 
     context "when the players are next to each other" do
       it "should update those players ranks" do
-        Match.create(winner: p3, loser: p2)
+        MatchObserver.new.after_save Match.create(winner: p3, loser: p2)
 
         expect(p3.reload.rank).to eq 2
         expect(p2.reload.rank).to eq 3
@@ -54,7 +60,7 @@ describe Match do
 
     context "when the winner moves over a single person" do
       it "should update the ranks correctly" do
-        Match.create(winner: p3, loser: p1)
+        MatchObserver.new.after_save Match.create(winner: p3, loser: p1)
 
         expect(p1.reload.rank).to eq 1
         expect(p3.reload.rank).to eq 2
@@ -68,6 +74,7 @@ describe Match do
         Match.update_all :occured_at => 1.day.ago
         players = Player.all.map{|p|[p.name, p.rank]}
         m = Match.create(winner: p4, loser: p1)
+        MatchObserver.new.after_save m
 
         expect(p1.reload.rank).to eq 1
         expect(p4.reload.rank).to eq 2
@@ -79,7 +86,7 @@ describe Match do
     context "when the winner doesn't have a rank yet" do
       it "assigns the correct ranks" do
         Player.update_all :active => true
-        Match.create(winner: p5, loser: p2)
+        MatchObserver.new.after_save Match.create(winner: p5, loser: p2)
 
         expect(p2.reload.rank).to eq 2
         expect(p5.reload.rank).to eq 3
@@ -100,7 +107,7 @@ describe Match do
     it "should mark players as inactive who haven't played a game in the last 30 days" do
       Player.update_all :active => true
       expect(p4).to be_active
-      Match.create(winner: p2, loser: p3)
+      MatchObserver.new.after_save Match.create(winner: p2, loser: p3)
       expect(p1.reload).to be_active
       expect(p2.reload).to be_active
       expect(p3.reload).to be_active
@@ -110,7 +117,7 @@ describe Match do
     it "should award players who are inactive with Inactive achievement if they don't have it" do
       Player.update_all :active => true
       expect(p4).to be_active
-      Match.create(winner: p2, loser: p3)
+      MatchObserver.new.after_save Match.create(winner: p2, loser: p3)
       expect(p1.reload).to be_active
       expect(p2.reload).to be_active
       expect(p3.reload).to be_active
@@ -122,7 +129,7 @@ describe Match do
       Player.update_all :active => true
       new_player = Player.create(name: "no matches")
       expect(new_player).to be_active
-      Match.create(winner: p2, loser: p3)
+      MatchObserver.new.after_save Match.create(winner: p2, loser: p3)
       expect(new_player.reload).to be_inactive
     end
 
@@ -133,7 +140,7 @@ describe Match do
       p1.reload.update_attribute :rank, 3
       p3.reload.update_attribute :rank, 4
 
-      Match.create(winner: p4, loser: p3)
+      MatchObserver.new.after_save Match.create(winner: p4, loser: p3)
       expect(p4.reload.rank).to eq 1
       expect(p2.reload.rank).to be_nil
       expect(p2).to be_inactive

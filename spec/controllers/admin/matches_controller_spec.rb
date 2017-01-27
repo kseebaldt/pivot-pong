@@ -4,15 +4,6 @@ describe Admin::MatchesController do
   let!(:p1) { Player.create name: 'me' }
   let!(:p2) { Player.create name: 'you' }
 
-  describe "#index" do
-    before { get :index }
-
-    it 'shows the matches' do
-      expect(response).to be_success
-      expect(assigns(:matches)).to eq Match.all
-    end
-  end
-
   describe "#new" do
     before { get :new }
     it 'assigns a match for the form' do
