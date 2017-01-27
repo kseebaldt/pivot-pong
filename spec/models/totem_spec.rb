@@ -5,6 +5,6 @@ describe Totem do
   let(:you) { Player.create(name: 'you') }
 
   it "should be valid" do
-    me.totems.create(loser: you).should be_valid
+    expect(me.totems.create(loser: you)).to be_valid
   end
 end

@@ -6,18 +6,18 @@ describe NumberJuan do
   it "should populate achievement specific attributes to achievement on create" do
     achievement = nil
     expect { achievement = NumberJuan.create(player: me) }.to change(me.achievements, :count).by(1)
-    achievement.title.should == "Number Juan"
-    achievement.description.should == "Dos no es un ganador y tres nadie recuerda"
-    achievement.badge.should == "icon-trophy"
+    expect(achievement.title).to eq "Number Juan"
+    expect(achievement.description).to eq "Dos no es un ganador y tres nadie recuerda"
+    expect(achievement.badge).to eq "icon-trophy"
   end
 
   describe "#eligible" do
     let(:you) { Player.create(name: "you") }
     it "should be eligible if you move to 1st place" do
-      me.rank.should == 1
-      you.rank.should == 2
-      NumberJuan.eligible?(me).should be true
-      NumberJuan.eligible?(you).should be false
+      expect(me.rank).to eq 1
+      expect(you.rank).to eq 2
+      expect(NumberJuan.eligible?(me)).to eq true
+      expect(NumberJuan.eligible?(you)).to eq false
     end
   end
 end

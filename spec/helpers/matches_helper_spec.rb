@@ -44,14 +44,14 @@ describe MatchesHelper do
       end
       it { should == ["P1", "P4", "P2", "P3"] }
     end
-    
+
     it "titleizes the rankings" do
       joe = Player.create(name: 'joe blow', rank: 1)
       jane = Player.create(name: 'jane doe', rank: 2)
       spot = Player.create(name: 'spot', rank: 3)
 
-      helper.calculate_rankings([Match.create(winner: joe, loser: jane), Match.create(winner: joe, loser: spot)]).should ==
-        ["Joe Blow", "Jane Doe", "Spot"]
+      matches = [Match.create(winner: joe, loser: jane), Match.create(winner: joe, loser: spot)]
+      expect(helper.calculate_rankings(matches)).to eq ["Joe Blow", "Jane Doe", "Spot"]
     end
   end
 end

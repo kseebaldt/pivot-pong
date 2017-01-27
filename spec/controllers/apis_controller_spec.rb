@@ -8,8 +8,8 @@ describe ApisController do
 
     it "should award the Bragging Rights badge to the winner" do
       expect { get :tweet, match_id: match.id }.to change(BraggingRights, :count).by(1)
-      me.reload.achievements.map(&:class).should include(BraggingRights)
-      you.reload.achievements.map(&:class).should_not include(BraggingRights)
+      expect(me.reload.achievements.map(&:class)).to include(BraggingRights)
+      expect(you.reload.achievements.map(&:class)).to_not include(BraggingRights)
     end
 
     it "should not award the Bragging Rights badge if the winner has it already" do

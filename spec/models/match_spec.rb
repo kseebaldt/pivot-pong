@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Match do
   describe "setting default date" do
     let(:occured_at) { Date.new(2011, 03, 27).to_time }
-    before { Time.stub(:now).and_return(occured_at) }
+    before { allow(Time).to receive(:now).and_return(occured_at) }
 
     it 'sets the default date to today' do
       expect(Match.create.occured_at).to eq occured_at
@@ -26,29 +26,29 @@ describe Match do
     let!(:establishing_match3) { Match.create(winner: p2.reload, loser: p1.reload) }
 
     before do
-      Match.order(:id).should == [establishing_match1, establishing_match2, establishing_match3]
-      establishing_match1.winner.should == p1
-      establishing_match1.loser.should == p4
+      expect(Match.order(:id)).to eq [establishing_match1, establishing_match2, establishing_match3]
+      expect(establishing_match1.winner).to eq p1
+      expect(establishing_match1.loser).to eq p4
 
-      p1.reload.should be_active
-      p2.reload.should be_active
-      p3.reload.should be_active
-      p4.reload.should be_active
-      p5.reload.should be_inactive
+      expect(p1.reload).to be_active
+      expect(p2.reload).to be_active
+      expect(p3.reload).to be_active
+      expect(p4.reload).to be_active
+      expect(p5.reload).to be_inactive
 
-      p1.rank.should == 1
-      p2.rank.should == 2
-      p3.rank.should == 3
-      p4.rank.should == 4
-      p5.rank.should be_nil
+      expect(p1.rank).to eq 1
+      expect(p2.rank).to eq 2
+      expect(p3.rank).to eq 3
+      expect(p4.rank).to eq 4
+      expect(p5.rank).to be_nil
     end
 
     context "when the players are next to each other" do
       it "should update those players ranks" do
         Match.create(winner: p3, loser: p2)
 
-        p3.reload.rank.should == 2
-        p2.reload.rank.should == 3
+        expect(p3.reload.rank).to eq 2
+        expect(p2.reload.rank).to eq 3
       end
     end
 
@@ -56,9 +56,9 @@ describe Match do
       it "should update the ranks correctly" do
         Match.create(winner: p3, loser: p1)
 
-        p1.reload.rank.should == 1
-        p3.reload.rank.should == 2
-        p2.reload.rank.should == 3
+        expect(p1.reload.rank).to eq 1
+        expect(p3.reload.rank).to eq 2
+        expect(p2.reload.rank).to eq 3
       end
     end
 
@@ -69,10 +69,10 @@ describe Match do
         players = Player.all.map{|p|[p.name, p.rank]}
         m = Match.create(winner: p4, loser: p1)
 
-        p1.reload.rank.should == 1
-        p4.reload.rank.should == 2
-        p2.reload.rank.should == 3
-        p3.reload.rank.should == 4
+        expect(p1.reload.rank).to eq 1
+        expect(p4.reload.rank).to eq 2
+        expect(p2.reload.rank).to eq 3
+        expect(p3.reload.rank).to eq 4
       end
     end
 
@@ -81,10 +81,10 @@ describe Match do
         Player.update_all :active => true
         Match.create(winner: p5, loser: p2)
 
-        p2.reload.rank.should == 2
-        p5.reload.rank.should == 3
-        p3.reload.rank.should == 4
-        p4.reload.rank.should == 5
+        expect(p2.reload.rank).to eq 2
+        expect(p5.reload.rank).to eq 3
+        expect(p3.reload.rank).to eq 4
+        expect(p4.reload.rank).to eq 5
       end
     end
   end
@@ -99,31 +99,31 @@ describe Match do
 
     it "should mark players as inactive who haven't played a game in the last 30 days" do
       Player.update_all :active => true
-      p4.should be_active
+      expect(p4).to be_active
       Match.create(winner: p2, loser: p3)
-      p1.reload.should be_active
-      p2.reload.should be_active
-      p3.reload.should be_active
-      p4.reload.should be_inactive
+      expect(p1.reload).to be_active
+      expect(p2.reload).to be_active
+      expect(p3.reload).to be_active
+      expect(p4.reload).to be_inactive
     end
 
     it "should award players who are inactive with Inactive achievement if they don't have it" do
       Player.update_all :active => true
-      p4.should be_active
+      expect(p4).to be_active
       Match.create(winner: p2, loser: p3)
-      p1.reload.should be_active
-      p2.reload.should be_active
-      p3.reload.should be_active
-      p4.reload.should be_inactive
-      p4.achievements.map(&:class).should include(Inactive)
+      expect(p1.reload).to be_active
+      expect(p2.reload).to be_active
+      expect(p3.reload).to be_active
+      expect(p4.reload).to be_inactive
+      expect(p4.achievements.map(&:class)).to include(Inactive)
     end
 
     it "should mark players as inactive who have never played a game" do
       Player.update_all :active => true
       new_player = Player.create(name: "no matches")
-      new_player.should be_active
+      expect(new_player).to be_active
       Match.create(winner: p2, loser: p3)
-      new_player.reload.should be_inactive
+      expect(new_player.reload).to be_inactive
     end
 
     it "should update other rankings around the newly inactive player" do
@@ -134,11 +134,11 @@ describe Match do
       p3.reload.update_attribute :rank, 4
 
       Match.create(winner: p4, loser: p3)
-      p4.reload.rank.should == 1
-      p2.reload.rank.should be_nil
-      p2.should be_inactive
-      p1.reload.rank.should == 2
-      p3.reload.rank.should == 3
+      expect(p4.reload.rank).to eq 1
+      expect(p2.reload.rank).to be_nil
+      expect(p2).to be_inactive
+      expect(p1.reload.rank).to eq 2
+      expect(p3.reload.rank).to eq 3
     end
   end
 
@@ -151,12 +151,12 @@ describe Match do
     end
     it "should reactivate inactive players when they win a match" do
       Match.create(winner: p1, loser: p2)
-      p1.reload.should be_active
+      expect(p1.reload).to be_active
     end
 
     it "should reactivate inactive players when the lose a match" do
       Match.create(winner: p2, loser: p1)
-      p1.reload.should be_active
+      expect(p1.reload).to be_active
     end
   end
 end

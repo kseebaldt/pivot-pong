@@ -7,13 +7,13 @@ describe ApplicationHelper do
     subject { helper.link_to_with_current(name, url) }
 
     context "when the URL is the current page" do
-      before { view.stub(:current_page?) { true } }
+      before { allow(view).to receive(:current_page?) { true } }
 
       it { should include('class="current"') }
     end
 
     context "when the URL is not the current page" do
-      before { view.stub(:current_page?) { false } }
+      before { allow(view).to receive(:current_page?) { false } }
 
       it { should_not include('class="current"') }
     end
@@ -38,8 +38,8 @@ describe ApplicationHelper do
   describe "#custom_styles" do
     it "returns a style tag with custom style overrides" do
       SiteSetting.find_or_create_by_setting_type('link color', value: 'red')
-      helper.custom_styles.should include("<style>")
-      helper.custom_styles.should include("red")
+      expect(helper.custom_styles).to include("<style>")
+      expect(helper.custom_styles).to include("red")
     end
   end
 end

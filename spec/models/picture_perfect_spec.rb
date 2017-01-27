@@ -6,14 +6,14 @@ describe PicturePerfect do
   it "should populate achievement specific attributes to achievement on create" do
     achievement = nil
     expect { achievement = PicturePerfect.create(player: me) }.to change(me.achievements, :count).by(1)
-    achievement.title.should == "Picture Perfect"
-    achievement.description.should == "Upload an avatar in your user profile"
-    achievement.badge.should == "icon-camera"
+    expect(achievement.title).to eq "Picture Perfect"
+    expect(achievement.description).to eq "Upload an avatar in your user profile"
+    expect(achievement.badge).to eq "icon-camera"
   end
 
   describe "#eligible" do
     it "should never be eligible" do
-      PicturePerfect.eligible?(me).should be false
+      expect(PicturePerfect.eligible?(me)).to be false
     end
   end
 end

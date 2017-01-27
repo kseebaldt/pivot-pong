@@ -8,20 +8,20 @@ describe Player do
   it "should validate unique names" do
     Player.create(name: 'p1')
     p = Player.new(name: 'p1')
-    p.should_not be_valid
-    p.error_on(:name).should be_present
+    expect(p).to_not be_valid
+    expect(p.errors[:name].length).to be(1)
   end
 
   it "should validate unique ranks" do
     p1 = Player.create(name: 'p1')
     p2 = Player.create(name: 'p2')
-    p1.rank.should_not be_nil
-    p2.rank.should_not be_nil
-    p1.rank.should_not == p2.rank
+    expect(p1.rank).to_not be_nil
+    expect(p2.rank).to_not be_nil
+    expect(p1.rank).to_not eq p2.rank
   end
 
   it "requires a name" do
-    Player.new.should_not be_valid
+    expect(Player.new).to_not be_valid
   end
 
   it 'should have a displayable name' do
@@ -46,16 +46,16 @@ describe Player do
     end
 
     it "should scope players correctly" do
-      Player.active.should == [me, you]
-      Player.inactive.should == [us]
+      expect(Player.active).to eq [me, you]
+      expect(Player.inactive).to eq [us]
     end
   end
 
   describe "#most_recent_match" do
     it "should return the most recent match" do
       player = Player.create(name: "me")
-      player.stub_chain(:matches, :descending).and_return [1, 2, 3]
-      player.most_recent_match.should == 1
+      allow(player).to receive_message_chain(:matches, :descending).and_return [1, 2, 3]
+      expect(player.most_recent_match).to eq 1
     end
   end
 
@@ -85,8 +85,8 @@ describe Player do
       me = Player.create(name: "me")
       you = Player.create(name: "you")
       Match.create(winner: me, loser: you)
-      me.most_recent_opponent.should == you
-      you.most_recent_opponent.should == me
+      expect(me.most_recent_opponent).to eq you
+      expect(you.most_recent_opponent).to eq me
     end
   end
 
@@ -99,10 +99,10 @@ describe Player do
     it "should leave no gaps in the rankings" do
       Player.compress_ranks
 
-      p1.reload.rank.should == 1
-      p2.reload.rank.should == 2
-      p3.reload.rank.should == 3
-      p4.reload.rank.should == 4
+      expect(p1.reload.rank).to eq 1
+      expect(p2.reload.rank).to eq 2
+      expect(p3.reload.rank).to eq 3
+      expect(p4.reload.rank).to eq 4
     end
   end
 end

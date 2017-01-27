@@ -6,8 +6,8 @@ describe Beginner do
   it "should populate achievement specific attributes to achievement on create" do
     achievement = nil
     expect { achievement = Beginner.create(player: me) }.to change(me.achievements, :count).by(1)
-    achievement.title.should == "Beginner"
-    achievement.description.should == "Welcome to the wonderful game of pong"
-    achievement.badge.should == "icon-check"
+    expect(achievement.title).to eq "Beginner"
+    expect(achievement.description).to eq "Welcome to the wonderful game of pong"
+    expect(achievement.badge).to eq "icon-check"
   end
 end

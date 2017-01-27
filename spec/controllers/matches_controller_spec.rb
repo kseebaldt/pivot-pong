@@ -13,14 +13,24 @@ describe MatchesController do
     describe "when achievements are won from a match" do
       before { get :index, d: true }
       it { should be_success }
-      it { assigns(:matches).sort.should == Match.order("occured_at desc").sort }
-      it { assigns(:match).should be }
-      it { assigns(:most_recent_match).should == Match.order("occured_at desc").first }
+      it 'shows matches with most recent first' do
+        expect(assigns(:matches).sort).to eq Match.order("occured_at desc").sort
+      end
+
+      it 'assigns a match' do
+        expect(assigns(:match)).to be
+      end
+
+      it 'assigns the most recent match' do
+        expect(assigns(:most_recent_match)).to eq Match.order("occured_at desc").first
+      end
     end
 
-    describe "when an achievement qualifying from twitter passes in a match id into d" do
-      before { get :index, d: newer_match.id }
-      it { assigns(:most_recent_match).should == newer_match }
+    describe "when an achievement qualifying from twitter" do
+      it "passes in a match id into d" do
+        get :index, d: newer_match.id
+        expect(assigns(:most_recent_match)).to eq newer_match
+      end
     end
   end
 
@@ -31,9 +41,9 @@ describe MatchesController do
     let!(:match) { Match.create(winner: me, loser: you, occured_at: occured_at) }
     it "should assign values for the match and players" do
       get :show, :id => match.to_param
-      assigns(:match).should == match
-      assigns(:winner).should == match.winner
-      assigns(:loser).should == match.loser
+      expect(assigns(:match)).to eq match
+      expect(assigns(:winner)).to eq match.winner
+      expect(assigns(:loser)).to eq match.loser
     end
   end
   describe "POST #create" do
@@ -53,8 +63,8 @@ describe MatchesController do
       bar = Player.create(name: "bar")
       post :create, {winner_name: "Foo", loser_name: "bar"}
       match = Match.last
-      match.winner.should == foo
-      match.loser.should == bar
+      expect(match.winner).to eq foo
+      expect(match.loser).to eq bar
     end
 
     it "doesn't create a match if winner or loser is blank" do
@@ -72,8 +82,8 @@ describe MatchesController do
       let(:loser) { Player.find_by_name "loser o'loserly" }
 
       it "strips whitespace from player names" do
-        winner.should be
-        loser.should be
+        expect(winner).to be
+        expect(loser).to be
       end
     end
   end
@@ -109,8 +119,8 @@ describe MatchesController do
       Match.create(winner: me.reload, loser: you.reload, occured_at: occured_at)
 
       get :rankings
-      response.should be_success
-      assigns(:rankings).should == [me, you]
+      expect(response).to be_success
+      expect(assigns(:rankings)).to eq [me, you]
     end
   end
 
@@ -122,20 +132,20 @@ describe MatchesController do
 
     it "renders a sorted, titleized list of player names" do
       get :players
-      response.should be_success
-      response.body.should == ["Danny Burkes", "Davis Frank", "Edward Hieatt", "Parker Thompson"].join("\n")
+      expect(response).to be_success
+      expect(response.body).to eq ["Danny Burkes", "Davis Frank", "Edward Hieatt", "Parker Thompson"].join("\n")
     end
 
     it "takes a query parameter" do
       get :players, q: "d"
-      response.should be_success
-      response.body.should == ["Danny Burkes", "Davis Frank"].join("\n")
+      expect(response).to be_success
+      expect(response.body).to eq ["Danny Burkes", "Davis Frank"].join("\n")
     end
 
     it "applies the query parameter case-insensitively" do
       get :players, q: "D"
-      response.should be_success
-      response.body.should == ["Danny Burkes", "Davis Frank"].join("\n")
+      expect(response).to be_success
+      expect(response.body).to eq ["Danny Burkes", "Davis Frank"].join("\n")
     end
   end
 end

@@ -4,8 +4,8 @@ describe Admin::SiteSettingsController do
   describe "#index" do
     it "assigns general settings and player settings" do
       get :index
-      assigns(:general_settings).should == SiteSetting.where(setting_type: SiteSetting::GENERAL_SETTINGS)
-      assigns(:player_settings).should == SiteSetting.where(setting_type: SiteSetting::PLAYER_SETTINGS)
+      expect(assigns(:general_settings)).to eq SiteSetting.where(setting_type: SiteSetting::GENERAL_SETTINGS)
+      expect(assigns(:player_settings)).to eq SiteSetting.where(setting_type: SiteSetting::PLAYER_SETTINGS)
     end
   end
 
@@ -16,7 +16,7 @@ describe Admin::SiteSettingsController do
           "link color" => {"value" => "bar"}
       }}
       post :group, params
-      setting.reload.value.should == "bar"
+      expect(setting.reload.value).to eq "bar"
     end
   end
 end

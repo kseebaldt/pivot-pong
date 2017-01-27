@@ -6,9 +6,9 @@ describe HulkSmash do
   it "should populate achievement specific attributes to achievement on create" do
     achievement = nil
     expect { achievement = HulkSmash.create(player: me) }.to change(me.achievements, :count).by(1)
-    achievement.title.should == "Hulk Smash"
-    achievement.description.should == "Overall win record vs. someone spreads 10 or more"
-    achievement.badge.should == "icon-legal"
+    expect(achievement.title).to eq "Hulk Smash"
+    expect(achievement.description).to eq "Overall win record vs. someone spreads 10 or more"
+    expect(achievement.badge).to eq "icon-legal"
   end
 
   describe "#eligible" do
@@ -24,8 +24,8 @@ describe HulkSmash do
       Match.create(winner: me, loser: you, occured_at: 3.days.ago)
       Match.create(winner: me, loser: you, occured_at: 2.days.ago)
       Match.create(winner: me, loser: you, occured_at: 1.days.ago)
-      HulkSmash.eligible?(me).should be true
-      HulkSmash.eligible?(you).should be false
+      expect(HulkSmash.eligible?(me)).to be true
+      expect(HulkSmash.eligible?(you)).to be false
     end
   end
 end

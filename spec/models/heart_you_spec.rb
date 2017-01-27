@@ -6,9 +6,9 @@ describe HeartYou do
   it "should populate achievement specific attributes to achievement on create" do
     achievement = nil
     expect { achievement = HeartYou.create(player: me) }.to change(me.achievements, :count).by(1)
-    achievement.title.should == "I Heart You"
-    achievement.description.should == "Last 3 logged matches were with the same person"
-    achievement.badge.should == "icon-heart"
+    expect(achievement.title).to eq "I Heart You"
+    expect(achievement.description).to eq "Last 3 logged matches were with the same person"
+    expect(achievement.badge).to eq "icon-heart"
   end
 
   describe "#eligible" do
@@ -17,7 +17,7 @@ describe HeartYou do
       Match.create(winner: me, loser: you, occured_at: 3.days.ago)
       Match.create(winner: me, loser: you, occured_at: 2.days.ago)
       Match.create(winner: me, loser: you, occured_at: 1.days.ago)
-      HeartYou.eligible?(me).should be true
+      expect(HeartYou.eligible?(me)).to be true
     end
   end
 end

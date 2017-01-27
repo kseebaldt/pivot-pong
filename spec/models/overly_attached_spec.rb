@@ -6,9 +6,9 @@ describe OverlyAttached do
   it "should populate achievement specific attributes to achievement on create" do
     achievement = nil
     expect { achievement = OverlyAttached.create(player: me) }.to change(me.achievements, :count).by(1)
-    achievement.title.should == "Overly Attached"
-    achievement.description.should == "Last 6 matches were with the same person"
-    achievement.badge.should == "icon-magnet"
+    expect(achievement.title).to eq "Overly Attached"
+    expect(achievement.description).to eq "Last 6 matches were with the same person"
+    expect(achievement.badge).to eq "icon-magnet"
   end
 
   describe "#eligible" do
@@ -20,7 +20,7 @@ describe OverlyAttached do
       Match.create(winner: me, loser: you, occured_at: 3.days.ago)
       Match.create(winner: me, loser: you, occured_at: 2.days.ago)
       Match.create(winner: me, loser: you, occured_at: 1.days.ago)
-      HeartYou.eligible?(me).should be true
+      expect(HeartYou.eligible?(me)).to be true
     end
   end
 end

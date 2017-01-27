@@ -11,11 +11,11 @@ describe SaveRankingsToPlayer do
     context "when no matches exist" do
       it "doesn't assign ranks" do
         SaveRankingsToPlayer.run
-        
-        p1.reload.rank.should be_nil
-        p2.reload.rank.should be_nil
-        p3.reload.rank.should be_nil
-        p4.reload.rank.should be_nil
+
+        expect(p1.reload.rank).to be_nil
+        expect(p2.reload.rank).to be_nil
+        expect(p3.reload.rank).to be_nil
+        expect(p4.reload.rank).to be_nil
       end
     end
 
@@ -23,7 +23,7 @@ describe SaveRankingsToPlayer do
       p3.update_attributes :rank => 3
 
       SaveRankingsToPlayer.run
-      p3.reload.rank.should be_nil
+      expect(p3.reload.rank).to be_nil
     end
 
     context "when matches exists" do
@@ -33,10 +33,10 @@ describe SaveRankingsToPlayer do
         Player.update_all(:active => false)
         SaveRankingsToPlayer.run
 
-        p1.reload.rank.should == 1
-        p2.reload.rank.should == 2
-        p3.reload.rank.should be_nil
-        p4.reload.rank.should be_nil
+        expect(p1.reload.rank).to eq 1
+        expect(p2.reload.rank).to eq 2
+        expect(p3.reload.rank).to be_nil
+        expect(p4.reload.rank).to be_nil
       end
 
       context "multiple matches" do
@@ -46,10 +46,10 @@ describe SaveRankingsToPlayer do
           Player.update_all(:active => false)
           SaveRankingsToPlayer.run
 
-          p1.reload.rank.should == 1
-          p2.reload.rank.should == 2
-          p3.reload.rank.should be_nil
-          p4.reload.rank.should be_nil
+          expect(p1.reload.rank).to eq 1
+          expect(p2.reload.rank).to eq 2
+          expect(p3.reload.rank).to be_nil
+          expect(p4.reload.rank).to be_nil
         end
       end
 
@@ -62,10 +62,10 @@ describe SaveRankingsToPlayer do
 
           SaveRankingsToPlayer.run
 
-          p1.reload.rank.should == 1
-          p2.reload.rank.should == 3
-          p3.reload.rank.should == 4
-          p4.reload.rank.should == 2
+          expect(p1.reload.rank).to eq 1
+          expect(p2.reload.rank).to eq 3
+          expect(p3.reload.rank).to eq 4
+          expect(p4.reload.rank).to eq 2
         end
       end
     end

@@ -6,14 +6,14 @@ describe Inactive do
   it "should populate achievement specific attributes to achievement on create" do
     achievement = nil
     expect { achievement = Inactive.create(player: me) }.to change(me.achievements, :count).by(1)
-    achievement.title.should == "Where'd You Go?"
-    achievement.description.should == "Gone inactive after 30 days of not playing"
-    achievement.badge.should == "icon-remove-circle"
+    expect(achievement.title).to eq "Where'd You Go?"
+    expect(achievement.description).to eq "Gone inactive after 30 days of not playing"
+    expect(achievement.badge).to eq "icon-remove-circle"
   end
 
   describe "#eligible" do
     it "should never be eligible, awarded during mark as inactive" do
-      Inactive.eligible?(me).should be false
+      expect(Inactive.eligible?(me)).to be false
     end
   end
 end

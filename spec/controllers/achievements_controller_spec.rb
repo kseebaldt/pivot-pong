@@ -1,19 +1,19 @@
 require 'spec_helper'
 
 describe AchievementsController do
-  describe "#index" do
-    before { get :index }
-    it { response.should be_success }
-    it { assigns(:achievements).should == Achievement.subclasses }
+  it "can show a list of achievements" do
+    get :index
+    expect(response).to be_success
+    expect(assigns(:achievements)).to eq Achievement.subclasses
   end
 
   describe "#show" do
     it "loads the achievement" do
       achievement = Beginner.create(player: Player.create(name: 'me'))
       get :show, id: 'beginner'
-      response.should be_success
-      assigns(:achievement).should == Beginner
-      assigns(:achievements).should == [achievement]
+      expect(response).to be_success
+      expect(assigns(:achievement)).to eq Beginner
+      expect(assigns(:achievements)).to eq [achievement]
     end
   end
 end

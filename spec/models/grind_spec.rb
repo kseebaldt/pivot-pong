@@ -6,9 +6,9 @@ describe Grind do
   it "should populate achievement specific attributes to achievement on create" do
     achievement = nil
     expect { achievement = Grind.create(player: me) }.to change(me.achievements, :count).by(1)
-    achievement.title.should == "The Grind"
-    achievement.description.should == "Play 5 consecutive matches without changing rank"
-    achievement.badge.should == "icon-cogs"
+    expect(achievement.title).to eq "The Grind"
+    expect(achievement.description).to eq "Play 5 consecutive matches without changing rank"
+    expect(achievement.badge).to eq "icon-cogs"
   end
 
   describe "#eligible" do
@@ -18,8 +18,8 @@ describe Grind do
       log_3 = Hashie::Mash.new(rank: 2)
       log_4 = Hashie::Mash.new(rank: 2)
       log_5 = Hashie::Mash.new(rank: 2)
-      me.stub_chain(:logs, :descending, :limit).and_return([log_1, log_2, log_3, log_4, log_5])
-      Grind.eligible?(me).should be true
+      allow(me).to receive_message_chain(:logs, :descending, :limit).and_return([log_1, log_2, log_3, log_4, log_5])
+      expect(Grind.eligible?(me)).to eq true
     end
   end
 end

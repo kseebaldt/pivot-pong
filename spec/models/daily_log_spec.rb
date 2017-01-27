@@ -8,10 +8,10 @@ describe DailyLog do
     it "should aggregate" do
       Match.create(winner: me, loser: you)
       daily_log = DailyLog.create
-      daily_log.should be_valid
-      daily_log.average_games_per_player.should == 0.5
-      daily_log.match_count.should == 1
-      daily_log.date.should == Date.today
+      expect(daily_log).to be_valid
+      expect(daily_log.average_games_per_player).to eq 0.5
+      expect(daily_log.match_count).to eq 1
+      expect(daily_log.date).to eq Date.today
     end
   end
 end

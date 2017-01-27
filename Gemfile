@@ -22,7 +22,7 @@ gem 'test-unit'
 
 group :test, :development do
   gem 'hashie'
-  gem 'rspec', '< 3.0'
-  gem 'rspec-rails', '< 3.0'
+  gem 'rspec'
+  gem 'rspec-rails'
   gem 'awesome_print', '~> 1.0'
 end

@@ -15,4 +15,5 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   config.use_transactional_fixtures = true
+  config.raise_errors_for_deprecations!
 end

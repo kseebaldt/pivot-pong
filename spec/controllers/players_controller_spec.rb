@@ -12,16 +12,16 @@ describe PlayersController do
 
     it "should load the correct player" do
       get :show, id: me.to_param
-      assigns(:player).should == me
-      assigns(:matches).should == me.matches.paginate(:page => 1).order("occured_at DESC")
-      assigns(:average_games_per_day).should == 1
-      response.should be_success
+      expect(assigns(:player)).to eq me
+      expect(assigns(:matches)).to eq me.matches.paginate(:page => 1).order("occured_at DESC")
+      expect(assigns(:average_games_per_day)).to eq 1
+      expect(response).to be_success
     end
 
     it "should load the achievement if set" do
       achievement = me.achievements.first
       get :show, id: me.to_param, a: achievement.to_param
-      assigns(:achievement).should == achievement
+      expect(assigns(:achievement)).to eq achievement
     end
   end
 
@@ -30,28 +30,28 @@ describe PlayersController do
       Match.create(winner: me, loser: you, occured_at: 1.day.ago)
       Match.create(winner: you, loser: me)
       matches = me.matches.where("winner_id = ? OR loser_id = ?", you.id, you.id)
-      matches.count.should == 2
+      expect(matches.count).to eq 2
       get :odds, player_id: me.id, opponent_id: you.id
-      response.body.should == '50.0'
+      expect(response.body).to eq '50.0'
     end
 
     it "should render 50 if winner rank and loser rank is nil" do
       me.update_attribute(:rank, nil)
       you.update_attribute(:rank, nil)
       get :odds, player_id: me.id, opponent_id: you.id
-      response.body.should == '50'
+      expect(response.body).to eq '50'
     end
 
     it "should render 0 if winner rank is nil and lose rank is not" do
       me.update_attribute(:rank, nil)
       get :odds, player_id: me.id, opponent_id: you.id
-      response.body.should == '0'
+      expect(response.body).to eq '0'
     end
 
     it "should render 100 if winner rank is not nil and loser rank is" do
       you.update_attribute(:rank, nil)
       get :odds, player_id: me.id, opponent_id: you.id
-      response.body.should == '100'
+      expect(response.body).to eq '100'
     end
   end
 end

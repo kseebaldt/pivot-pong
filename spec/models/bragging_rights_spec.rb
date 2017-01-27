@@ -6,14 +6,14 @@ describe BraggingRights do
   it "should populate achievement specific attributes to achievement on create" do
     achievement = nil
     expect { achievement = BraggingRights.create(player: me) }.to change(me.achievements, :count).by(1)
-    achievement.title.should == "Bragging Rights"
-    achievement.description.should == "Tweet Your Victory"
-    achievement.badge.should == "icon-twitter"
+    expect(achievement.title).to eq "Bragging Rights"
+    expect(achievement.description).to eq "Tweet Your Victory"
+    expect(achievement.badge).to eq "icon-twitter"
   end
 
   describe "#eligible" do
     it "should never be eligible" do
-      BraggingRights.eligible?(me).should be false
+      expect(BraggingRights.eligible?(me)).to be false
     end
   end
 end

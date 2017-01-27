@@ -7,13 +7,13 @@ describe StatsController do
     it "GET index" do
       Match.create(winner: me, loser: you)
       get :index
-      assigns(:average_games_per_day).should == 1
-      assigns(:matches_labels).sort.should == ['Me - 1','You - 1']
-      assigns(:matches_values).should == [1,1]
-      assigns(:winning_matches_labels).sort.should == ['Me - 1','You - 0']
-      assigns(:winning_matches).should == [1,0]
-      assigns(:winning_percentage_labels).sort.should == ['Me - 100.000%','You - 0.000%']
-      assigns(:winning_percentage).should == [100.000,0.000]
+      expect(assigns(:average_games_per_day)).to eq 1
+      expect(assigns(:matches_labels).sort).to eq ['Me - 1','You - 1']
+      expect(assigns(:matches_values)).to eq [1,1]
+      expect(assigns(:winning_matches_labels).sort).to eq ['Me - 1','You - 0']
+      expect(assigns(:winning_matches)).to eq [1,0]
+      expect(assigns(:winning_percentage_labels).sort).to eq ['Me - 100.000%','You - 0.000%']
+      expect(assigns(:winning_percentage)).to eq [100.000,0.000]
     end
   end
 end

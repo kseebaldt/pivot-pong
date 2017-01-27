@@ -6,15 +6,15 @@ describe WorkingHard do
   it "should populate achievement specific attributes to achievement on create" do
     achievement = nil
     expect { achievement = WorkingHard.create(player: me) }.to change(me.achievements, :count).by(1)
-    achievement.title.should == "Working Hard or Hardly Working?"
-    achievement.description.should == "Log more than 5 matches in a single day"
-    achievement.badge.should == "icon-headphones"
+    expect(achievement.title).to eq "Working Hard or Hardly Working?"
+    expect(achievement.description).to eq "Log more than 5 matches in a single day"
+    expect(achievement.badge).to eq "icon-headphones"
   end
 
   describe "#eligible" do
     it "should be eligible if you log more than 5 matches in a single day" do
-      me.stub_chain(:matches, :occurred_today, :size).and_return(6)
-      WorkingHard.eligible?(me).should be true
+      allow(me).to receive_message_chain(:matches, :occurred_today, :size).and_return(6)
+      expect(WorkingHard.eligible?(me)).to be true
     end
   end
 end

@@ -6,9 +6,9 @@ describe Streak do
   it "should populate achievement specific attributes to achievement on create" do
     achievement = nil
     expect { achievement = Streak.create(player: me) }.to change(me.achievements, :count).by(1)
-    achievement.title.should == "You're on a Streak!"
-    achievement.description.should == "Win 5 matches in a row"
-    achievement.badge.should == "icon-fire"
+    expect(achievement.title).to eq "You're on a Streak!"
+    expect(achievement.description).to eq "Win 5 matches in a row"
+    expect(achievement.badge).to eq "icon-fire"
   end
 
   describe "#eligible" do
@@ -20,8 +20,8 @@ describe Streak do
       Match.create(winner: me, loser: you, occured_at: 3.days.ago)
       Match.create(winner: me, loser: you, occured_at: 2.days.ago)
       Match.create(winner: me, loser: you, occured_at: 1.days.ago)
-      Streak.eligible?(me).should be true
-      Streak.eligible?(you).should be false
+      expect(Streak.eligible?(me)).to be true
+      expect(Streak.eligible?(you)).to be false
     end
 
     it "should be not eligible if you don't win 5 matches in a row" do
@@ -30,8 +30,8 @@ describe Streak do
       Match.create(winner: you, loser: me, occured_at: 3.days.ago)
       Match.create(winner: me, loser: you, occured_at: 2.days.ago)
       Match.create(winner: me, loser: you, occured_at: 1.days.ago)
-      Streak.eligible?(me).should be false
-      Streak.eligible?(you).should be false
+      expect(Streak.eligible?(me)).to be false
+      expect(Streak.eligible?(you)).to be false
     end
   end
 end

@@ -6,17 +6,17 @@ describe TwilightSaga do
   it "should populate achievement specific attributes to achievement on create" do
     achievement = nil
     expect { achievement = TwilightSaga.create(player: me) }.to change(me.achievements, :count).by(1)
-    achievement.title.should == "Twilight Saga"
-    achievement.description.should == "Log a match after 6pm PST"
-    achievement.badge.should == "icon-time"
+    expect(achievement.title).to eq "Twilight Saga"
+    expect(achievement.description).to eq "Log a match after 6pm PST"
+    expect(achievement.badge).to eq "icon-time"
   end
 
   describe "#eligible" do
     let(:you) { Player.create(name: "you") }
     it "Log a match after 6pm PST" do
       Match.create(winner: me, loser: you, occured_at: (Date.today.beginning_of_day + 20.hours))
-      TwilightSaga.eligible?(me).should be true
-      TwilightSaga.eligible?(you).should be true
+      expect(TwilightSaga.eligible?(me)).to be true
+      expect(TwilightSaga.eligible?(you)).to be true
     end
   end
 end
