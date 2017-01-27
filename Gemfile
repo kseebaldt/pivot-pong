@@ -25,4 +25,5 @@ group :test, :development do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'awesome_print', '~> 1.0'
+  gem 'timecop'
 end
