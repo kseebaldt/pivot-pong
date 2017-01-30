@@ -17,9 +17,9 @@ module Pong
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
-    # Activate observers that should always be running.
-    # config.active_record.observers = :match_observer unless File.basename($0) == 'rake' #disable observers when running rake
     config.assets.initialize_on_precompile = false
+    config.assets.precompile << %w[ popup.js analytics.js pie.js ]
+    config.assets.precompile << %w[ admin.css ]
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
