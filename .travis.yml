@@ -1,4 +1,7 @@
----
 language: ruby
 before_script: cp config/database.yml{.example,} ; RAILS_ENV=test bundle exec rake db:create db:migrate
 cache: bundler
+env:
+  global:
+  - secure: HHL1vkvDju3DnoHwXKTcNkpNFNoIxLVdIaLBswYDxjDrt/cN9pxFhhHzUypM8Rf0pTPvfZ3gpg7o/pkba2iT0+xveeMOKpoaVsT14UI/bSDgtZmu+gD0Zj+iVvZ1maAyR2R813GWi6/svEMY49iTGefHdXtBmhd5Y9bv1hs3WDY=
+  - secure: CjZI9S5DHiJ/nVq9D4a0LxYZXnIys2mqOTH6xg27KMbq5Av4c8zfZoVPi2/MnqMHQDXBrfCAD/cOOXx6KopyyDdmly3ivbFsLxHQF1wWESeAfVdIpROWqklOvi6DpgxqCBehtFfSQRhlz7+PgXrBkO7IkuPJzyJGWyY9IPpA6AI=
