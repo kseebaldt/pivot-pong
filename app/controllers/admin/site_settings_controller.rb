@@ -7,7 +7,7 @@ class Admin::SiteSettingsController < Admin::BaseController
   def group
     settings = params[:site_settings]
     settings.keys.each do |setting_type|
-      if updateable = SiteSetting.find_by_setting_type(setting_type)
+      if updateable = SiteSetting.where(setting_type: setting_type).first
         updateable.update_column(:value, settings[setting_type]["value"])
       end
     end

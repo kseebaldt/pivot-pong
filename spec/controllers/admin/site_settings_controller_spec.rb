@@ -11,11 +11,12 @@ describe Admin::SiteSettingsController do
 
   describe "#group" do
     it "updates the settings submitted by the form" do
-      setting = SiteSetting.create(setting_type: "link color", value: "foo")
+      setting = SiteSetting.create!(setting_type: "link color", value: "foo")
       params = {site_settings: {
           "link color" => {"value" => "bar"}
       }}
       post :group, params
+      p SiteSetting.all
       expect(setting.reload.value).to eq "bar"
     end
   end
