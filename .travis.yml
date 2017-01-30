@@ -1,5 +1,5 @@
 language: ruby
-before_script: cp config/database.yml{.example,} ; RAILS_ENV=test bundle exec rake db:create db:migrate
+before_script: cp config/database.yml{.example,} ; bundle exec rake db:create:all db:migrate db:test:prepare
 cache: bundler
 env:
   global:
