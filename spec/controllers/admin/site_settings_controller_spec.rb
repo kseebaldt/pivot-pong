@@ -16,7 +16,6 @@ describe Admin::SiteSettingsController do
           "link color" => {"value" => "bar"}
       }}
       post :group, params
-      p SiteSetting.all
       expect(setting.reload.value).to eq "bar"
     end
   end

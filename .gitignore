@@ -1,6 +1,5 @@
 .DS_Store
 .bundle
-.rspec
 tmp/
 log/
 *.sqlite3

@@ -31,6 +31,10 @@ describe ApplicationHelper do
         ENV["pong_location"] = "Starbase Alpha"
       end
 
+      after do
+        ENV["pong_location"] = nil
+      end
+
       it { should == "Starbase Alpha" }
     end
   end
