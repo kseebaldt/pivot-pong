@@ -11,44 +11,45 @@
 
 = render partial: 'shared/match_history', locals: {matches: @matches}
 
-- if @most_recent_match && @most_recent_match.achievements.present?
-  .modal.fade
-    .modal-dialog
-      .modal-content
-        .modal-header
-          %button.close{data: {dismiss: "modal"}}
-            &times;
-          %h4
-            Achievement unlocked!
-        .modal-body
-          %table.table
-            %thead
-              %tr
-                %th= @most_recent_match.winner.display_name
-                %th= @most_recent_match.loser.display_name
-            %tbody
-              %tr
-                %td
-                  - @most_recent_match.achievements.from_player(@most_recent_match.winner).each do |achievement|
-                    .badge-wrap
-                      .badge-large
-                        %i{class: achievement.badge}
-                      .badge-wrap-right
-                        %strong.badge-title= achievement.title
-                        .badge-description= achievement.description
-                %td
-                  - @most_recent_match.achievements.from_player(@most_recent_match.loser).each do |achievement|
-                    .badge-wrap
-                      .badge-large
-                        %i{class: achievement.badge}
-                      .badge-wrap-right
-                        %strong.badge-title= achievement.title
-                        .badge-description= achievement.description
+- content_for :modals do
+  - if @most_recent_match && @most_recent_match.achievements.present?
+    .modal.fade
+      .modal-dialog
+        .modal-content
+          .modal-header
+            %button.close{data: {dismiss: "modal"}}
+              &times;
+            %h4
+              Achievement unlocked!
+          .modal-body
+            %table.table
+              %thead
+                %tr
+                  %th= @most_recent_match.winner.display_name
+                  %th= @most_recent_match.loser.display_name
+              %tbody
+                %tr
+                  %td
+                    - @most_recent_match.achievements.from_player(@most_recent_match.winner).each do |achievement|
+                      .badge-wrap
+                        .badge-large
+                          %i{class: achievement.badge}
+                        .badge-wrap-right
+                          %strong.badge-title= achievement.title
+                          .badge-description= achievement.description
+                  %td
+                    - @most_recent_match.achievements.from_player(@most_recent_match.loser).each do |achievement|
+                      .badge-wrap
+                        .badge-large
+                          %i{class: achievement.badge}
+                        .badge-wrap-right
+                          %strong.badge-title= achievement.title
+                          .badge-description= achievement.description
 
-  :javascript
-    $(function() {
-      $(".modal").modal();
-      setTimeout(function() {
-        //$(".modal").modal('hide');
-      }, 8000);
-    });
+    :javascript
+      $(function() {
+        $(".modal").modal();
+        setTimeout(function() {
+          $(".modal").modal('hide');
+        }, 8000);
+      });

@@ -49,34 +49,37 @@
 
   .back= link_to "Back", root_url
 
-- if @achievement
-  .modal.fade
-    .modal-header
-      %button.close{data: {dismiss: "modal"}}
-        &times;
-      %h4
-        Achievement unlocked!
-    .modal-body
-      %table.table
-        %thead
-          %tr
-            %th= @player.display_name
-        %tbody
-          %tr
-            %td
-              .badge-wrap
-                .badge-large
-                  %i{class: @achievement.badge}
-                .badge-wrap-right
-                  %strong.badge-title= @achievement.title
-                  .badge-description= @achievement.description
-  :javascript
-    $(function() {
-      $(".modal").modal();
-      setTimeout(function() {
-        $(".modal").modal('hide');
-      }, 8000);
-    });
+- content_for :modals do
+  - if @achievement
+    .modal.fade
+      .modal-dialog
+        .modal-content
+          .modal-header
+            %button.close{data: {dismiss: "modal"}}
+              &times;
+            %h4
+              Achievement unlocked!
+          .modal-body
+            %table.table
+              %thead
+                %tr
+                  %th= @player.display_name
+              %tbody
+                %tr
+                  %td
+                    .badge-wrap
+                      .badge-large
+                        %i{class: @achievement.badge}
+                      .badge-wrap-right
+                        %strong.badge-title= @achievement.title
+                        .badge-description= @achievement.description
+    :javascript
+      $(function() {
+        $(".modal").modal();
+        setTimeout(function() {
+          $(".modal").modal('hide');
+        }, 8000);
+      });
 
 = javascript_include_tag 'popup'
 = javascript_include_tag 'analytics'
