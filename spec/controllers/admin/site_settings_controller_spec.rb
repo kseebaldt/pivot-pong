@@ -11,7 +11,7 @@ describe Admin::SiteSettingsController do
 
   describe "#group" do
     it "updates the settings submitted by the form" do
-      setting = SiteSetting.find_or_create_by_setting_type("link color", value: "foo")
+      setting = SiteSetting.create(setting_type: "link color", value: "foo")
       params = {site_settings: {
           "link color" => {"value" => "bar"}
       }}

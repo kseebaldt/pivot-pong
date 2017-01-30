@@ -7,6 +7,6 @@ class ApisController < ApplicationController
       BraggingRights.create(player: winner, match: match)
       award = true
     end
-    render :text => award, :content_type => "text/javascript"
+    render :json => award
   end
 end

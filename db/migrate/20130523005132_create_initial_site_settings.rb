@@ -1,7 +1,7 @@
 class CreateInitialSiteSettings < ActiveRecord::Migration
   def up
     SiteSetting::ALL_SETTINGS.each do |setting|
-      SiteSetting.find_or_create_by_setting_type(setting)
+      SiteSetting.find_or_create_by(setting_type: setting)
     end
   end
 

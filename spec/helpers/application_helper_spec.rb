@@ -37,7 +37,7 @@ describe ApplicationHelper do
 
   describe "#custom_styles" do
     it "returns a style tag with custom style overrides" do
-      SiteSetting.find_or_create_by_setting_type('link color', value: 'red')
+      SiteSetting.create(setting_type: 'link color', value: 'red')
       expect(helper.custom_styles).to include("<style>")
       expect(helper.custom_styles).to include("red")
     end

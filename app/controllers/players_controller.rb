@@ -43,6 +43,6 @@ class PlayersController < ApplicationController
                       total_rank = player.rank.to_f + opponent.rank.to_f
                       opponent.rank.to_f/total_rank*100
                   end
-    render text: probability, content_type: "text/javascript"
+    render json: probability
   end
 end

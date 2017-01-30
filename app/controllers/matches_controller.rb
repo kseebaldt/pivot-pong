@@ -6,7 +6,7 @@ class MatchesController < ApplicationController
 
   def create
     winner, loser = params.values_at(:winner_name, :loser_name).map { |name|
-      Player.find_or_create_by_name name.strip.downcase
+      Player.find_or_create_by(name: name.strip.downcase)
     }
 
     occured_at = params[:match].present? ? params[:match][:occured_at] : Time.current
