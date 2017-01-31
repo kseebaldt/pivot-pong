@@ -9,7 +9,7 @@ class HulkSmash < Achievement
     end
 
     def badge
-      "icon-legal"
+      "fa fa-legal"
     end
 
     def eligible?(player)

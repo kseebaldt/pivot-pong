@@ -9,7 +9,7 @@ class BigBen < Achievement
     end
 
     def badge
-      "icon-tags"
+      "fa fa-tags"
     end
 
     def eligible?(player)

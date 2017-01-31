@@ -9,7 +9,7 @@ class Streak < Achievement
     end
 
     def badge
-      "icon-fire"
+      "fa fa-fire"
     end
 
     def eligible?(player)

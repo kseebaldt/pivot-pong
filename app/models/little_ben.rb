@@ -9,7 +9,7 @@ class LittleBen < Achievement
     end
 
     def badge
-      "icon-tag"
+      "fa fa-tag"
     end
 
     def eligible?(player)

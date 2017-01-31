@@ -9,7 +9,7 @@ class Lemons < Achievement
     end
 
     def badge
-      "icon-lemon"
+      "fa fa-lemon-o"
     end
 
     def eligible?(player)

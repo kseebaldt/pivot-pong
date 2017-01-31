@@ -9,7 +9,7 @@ class LongJump < Achievement
     end
 
     def badge
-      "icon-circle-arrow-up"
+      "fa fa-long-arrow-up"
     end
 
     def eligible?(player)

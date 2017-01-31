@@ -9,7 +9,7 @@ class NumberJuan < Achievement
     end
 
     def badge
-      "icon-trophy"
+      "fa fa-trophy"
     end
 
     def eligible?(player)

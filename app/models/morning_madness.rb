@@ -9,7 +9,7 @@ class MorningMadness < Achievement
     end
 
     def badge
-      "icon-adjust"
+      "fa fa-adjust"
     end
 
     def eligible?(player)

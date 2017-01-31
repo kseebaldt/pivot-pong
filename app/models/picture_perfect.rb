@@ -9,7 +9,7 @@ class PicturePerfect < Achievement
     end
 
     def badge
-      "icon-camera"
+      "fa fa-camera"
     end
 
     def eligible?(player)

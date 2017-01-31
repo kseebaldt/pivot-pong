@@ -9,7 +9,7 @@ class TwilightSaga < Achievement
     end
 
     def badge
-      "icon-time"
+      "fa fa-clock-o"
     end
 
     def eligible?(player)

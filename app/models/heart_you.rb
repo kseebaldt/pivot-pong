@@ -9,7 +9,7 @@ class HeartYou < Achievement
     end
 
     def badge
-      "icon-heart"
+      "fa fa-heart"
     end
 
     def eligible?(player)

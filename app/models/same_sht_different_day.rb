@@ -9,7 +9,7 @@ class SameShtDifferentDay < Achievement
     end
 
     def badge
-      "icon-lock"
+      "fa fa-lock"
     end
 
     def eligible?(player)

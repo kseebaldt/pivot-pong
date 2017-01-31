@@ -9,7 +9,7 @@ class WorkingHard < Achievement
     end
 
     def badge
-      "icon-headphones"
+      "fa fa-headphones"
     end
 
     def eligible?(player)

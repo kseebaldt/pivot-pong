@@ -9,7 +9,7 @@ class OverlyAttached < Achievement
     end
 
     def badge
-      "icon-magnet"
+      "fa fa-magnet"
     end
 
     def eligible?(player)

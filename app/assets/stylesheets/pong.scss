@@ -126,13 +126,6 @@ marquee {
   float: right;
 }
 
-a [class^="icon-"],
-a [class*=" icon-"],
-a [class^="icon-"]:before,
-a [class*=" icon-"]:before {
-  display: inline-block;
-}
-
 #page, .logo-area {
   width: 1000px;
   margin: 0 auto;

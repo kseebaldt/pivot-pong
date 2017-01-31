@@ -9,7 +9,7 @@ class Grind < Achievement
     end
 
     def badge
-      "icon-cogs"
+      "fa fa-cogs"
     end
 
     def eligible?(player)

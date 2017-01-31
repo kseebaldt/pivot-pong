@@ -9,7 +9,7 @@ class WelcomeMat < Achievement
     end
 
     def badge
-      "icon-plus"
+      "fa fa-plus"
     end
 
     def eligible?(player)

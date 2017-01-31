@@ -9,7 +9,7 @@ class Inactive < Achievement
     end
 
     def badge
-      "icon-remove-circle"
+      "fa fa-minus-circle"
     end
 
     def eligible?(player)
