@@ -125,26 +125,26 @@ describe MatchesController do
 
   describe "GET #players" do
     before do
-      @match1 = Match.create(winner: Player.create(name: "danny burkes"), loser: Player.create(name: "edward hieatt"))
-      @match2 = Match.create(winner: Player.create(name: "davis frank"), loser: Player.create(name: "parker thompson"))
+      @match1 = Match.create(winner: Player.create(name: "Danny Burkes"), loser: Player.create(name: "Edward Hieatt"))
+      @match2 = Match.create(winner: Player.create(name: "Robert deForest"), loser: Player.create(name: "Parker Thompson"))
     end
 
-    it "renders a sorted, titleized list of player names" do
+    it "renders a sorted list of player names" do
       get :players
       expect(response).to be_success
-      expect(response.body).to eq ["Danny Burkes", "Davis Frank", "Edward Hieatt", "Parker Thompson"].join("\n")
+      expect(response.body).to eq ["Danny Burkes", "Edward Hieatt", "Parker Thompson", "Robert deForest"].join("\n")
     end
 
     it "takes a query parameter" do
       get :players, q: "d"
       expect(response).to be_success
-      expect(response.body).to eq ["Danny Burkes", "Davis Frank"].join("\n")
+      expect(response.body).to eq ["Danny Burkes", "Robert deForest"].join("\n")
     end
 
-    it "applies the query parameter case-insensitively" do
+    it "applies the query parameter case-insensitively to each space separated name-part" do
       get :players, q: "D"
       expect(response).to be_success
-      expect(response.body).to eq ["Danny Burkes", "Davis Frank"].join("\n")
+      expect(response.body).to eq ["Danny Burkes", "Robert deForest"].join("\n")
     end
   end
 end

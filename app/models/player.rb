@@ -7,7 +7,6 @@ class Player < ActiveRecord::Base
   has_many :logs, :dependent => :destroy
   has_many :totems, :dependent => :destroy
 
-  before_validation :downcase_name
   before_save :clear_ranks_for_inactive_players
 
   before_create :update_rank
@@ -21,7 +20,7 @@ class Player < ActiveRecord::Base
   scope :inactive, lambda { where(:active => false) }
 
   def display_name
-    name.titleize
+    name
   end
 
   def most_recent_match
@@ -48,10 +47,6 @@ class Player < ActiveRecord::Base
   end
 
   private
-
-  def downcase_name
-    self.name = self.name.downcase if self.name
-  end
 
   def clear_ranks_for_inactive_players
     self.rank = nil if self.inactive?

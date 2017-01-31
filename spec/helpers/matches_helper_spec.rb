@@ -10,14 +10,14 @@ describe MatchesHelper do
     end
 
     context "one match passed in" do
-      let(:matches) { [Match.create(winner: Player.create(name: 'me'), loser: Player.create(name: 'you'))] }
-      it { should == ["Me", "You"] }
+      let(:matches) { [Match.create(winner: Player.create(name: 'Me'), loser: Player.create(name: 'you'))] }
+      it { should == ["Me", "you"] }
     end
 
     context "multiple matches" do
       let(:matches) do
-        p1 = Player.create(name: 'p1')
-        p2 = Player.create(name: 'p2')
+        p1 = Player.create(name: 'P1')
+        p2 = Player.create(name: 'P2')
         [
           Match.create(winner: p1, loser: p2),
           Match.create(winner: p2, loser: p1)
@@ -28,10 +28,10 @@ describe MatchesHelper do
 
     context "moving halfway to the loser" do
       let(:matches) do
-        p1 = Player.create(name: 'p1')
-        p2 = Player.create(name: 'p2')
-        p3 = Player.create(name: 'p3')
-        p4 = Player.create(name: 'p4')
+        p1 = Player.create(name: 'P1')
+        p2 = Player.create(name: 'P2')
+        p3 = Player.create(name: 'P3')
+        p4 = Player.create(name: 'P4')
         p1.update_attribute(:rank, 1)
         p2.update_attribute(:rank, 3)
         p3.update_attribute(:rank, 4)
@@ -45,13 +45,13 @@ describe MatchesHelper do
       it { should == ["P1", "P4", "P2", "P3"] }
     end
 
-    it "titleizes the rankings" do
-      joe = Player.create(name: 'joe blow', rank: 1)
-      jane = Player.create(name: 'jane doe', rank: 2)
-      spot = Player.create(name: 'spot', rank: 3)
+    it "preserves entered case in rankings" do
+      joe = Player.create(name: 'joe Blow', rank: 1)
+      jane = Player.create(name: 'Jane doe', rank: 2)
+      spot = Player.create(name: 'spOt', rank: 3)
 
       matches = [Match.create(winner: joe, loser: jane), Match.create(winner: joe, loser: spot)]
-      expect(helper.calculate_rankings(matches)).to eq ["Joe Blow", "Jane Doe", "Spot"]
+      expect(helper.calculate_rankings(matches)).to eq ["joe Blow", "Jane doe", "spOt"]
     end
   end
 end

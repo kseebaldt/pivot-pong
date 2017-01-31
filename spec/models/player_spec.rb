@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Player do
-  it 'should downcase names' do
-    expect(Player.create(name: "Gregg Van Hove").name).to eq('gregg van hove')
+  it 'should preserve case of names' do
+    expect(Player.create(name: "Gregg Van Hove").name).to eq('Gregg Van Hove')
   end
 
   it "should validate unique names" do
@@ -25,7 +25,7 @@ describe Player do
   end
 
   it 'should have a displayable name' do
-    expect(Player.create(name: 'scooby doo').display_name).to eq('Scooby Doo')
+    expect(Player.create(name: 'scooby Doo').display_name).to eq('scooby Doo')
   end
 
   describe "ranked" do

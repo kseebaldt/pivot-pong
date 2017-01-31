@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe StatsController do
   describe "display average games per day" do
-    let(:me) { Player.create(name: 'me') }
-    let(:you) { Player.create(name: 'you') }
+    let(:me) { Player.create(name: 'Me') }
+    let(:you) { Player.create(name: 'You') }
     it "GET index" do
       Match.create(winner: me, loser: you)
       get :index

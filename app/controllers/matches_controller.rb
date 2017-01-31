@@ -48,12 +48,13 @@ class MatchesController < ApplicationController
 
   def players
     if params[:q]
-      query = params[:q].downcase + '%'
-      names = Player.where(["LOWER(name) LIKE ?", query]).collect(&:name)
+      queryStart = params[:q].downcase + '%'
+      queryMid = '% ' + params[:q].downcase + '%'
+      names = Player.where(['LOWER(name) LIKE ? OR LOWER(name) LIKE ?', queryStart, queryMid]).collect(&:name)
     else
       names = Player.all.collect(&:name)
     end
 
-    render text: names.collect(&:downcase).sort.uniq.collect(&:titleize).join("\n")
+    render text: names.sort.uniq.join("\n")
   end
 end
