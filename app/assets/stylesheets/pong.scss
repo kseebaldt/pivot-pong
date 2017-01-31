@@ -199,7 +199,6 @@ marquee {
 }
 .badges {
   font-size: 20px;
-  height: 40px;
   width: 230px;
   display: inline-block;
   margin-bottom: -5px;
@@ -214,6 +213,9 @@ marquee {
     white-space: normal;
     line-height: 13px;
     font-size: 13px;
+  }
+  i {
+    width: 22px;
   }
 }
 
