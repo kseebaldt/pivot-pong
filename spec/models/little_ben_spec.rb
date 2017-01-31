@@ -8,7 +8,7 @@ describe LittleBen do
     expect { achievement = LittleBen.create(player: me) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "Little Ben!"
     expect(achievement.description).to eq "Played more than 50 matches"
-    expect(achievement.badge).to eq "icon-tag"
+    expect(achievement.badge).to eq "fa fa-tag"
   end
 
   describe "#eligible" do

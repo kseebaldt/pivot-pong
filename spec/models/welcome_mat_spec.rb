@@ -8,7 +8,7 @@ describe WelcomeMat do
     expect { achievement = WelcomeMat.create(player: me) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "Laying Out the Welcome Mat"
     expect(achievement.description).to eq "Play someone not on the ladder"
-    expect(achievement.badge).to eq "icon-plus"
+    expect(achievement.badge).to eq "fa fa-plus"
   end
 
   describe "#eligible" do

@@ -8,7 +8,7 @@ describe HeartYou do
     expect { achievement = HeartYou.create(player: me) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "I Heart You"
     expect(achievement.description).to eq "Last 3 logged matches were with the same person"
-    expect(achievement.badge).to eq "icon-heart"
+    expect(achievement.badge).to eq "fa fa-heart"
   end
 
   describe "#eligible" do

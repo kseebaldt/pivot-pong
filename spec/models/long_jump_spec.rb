@@ -8,7 +8,7 @@ describe LongJump do
     expect { achievement = LongJump.create(player: me) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "Long Jump"
     expect(achievement.description).to eq "Advances more than 3 spots in rank from a single match"
-    expect(achievement.badge).to eq "icon-circle-arrow-up"
+    expect(achievement.badge).to eq "fa fa-long-arrow-up"
   end
 
   describe "#eligible" do

@@ -8,7 +8,7 @@ describe HeadHunter do
     expect { achievement = HeadHunter.create(player: me) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "Head Hunter"
     expect(achievement.description).to eq "Accumulate 10 or more totems for your totem pole"
-    expect(achievement.badge).to eq "icon-user"
+    expect(achievement.badge).to eq "fa fa-user"
   end
 
   describe "#eligible" do

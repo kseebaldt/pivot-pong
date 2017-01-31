@@ -8,7 +8,7 @@ describe Lemons do
     expect { achievement = Lemons.create(player: me) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "When Life Gives You Lemons..."
     expect(achievement.description).to eq "Lose 5 matches in a row"
-    expect(achievement.badge).to eq "icon-lemon"
+    expect(achievement.badge).to eq "fa fa-lemon-o"
   end
 
   describe "#eligible" do

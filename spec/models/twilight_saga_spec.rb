@@ -8,7 +8,7 @@ describe TwilightSaga do
     expect { achievement = TwilightSaga.create(player: me) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "Twilight Saga"
     expect(achievement.description).to eq "Log a match after 6pm PST"
-    expect(achievement.badge).to eq "icon-time"
+    expect(achievement.badge).to eq "fa fa-clock-o"
   end
 
   describe "#eligible" do

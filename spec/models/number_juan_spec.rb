@@ -8,7 +8,7 @@ describe NumberJuan do
     expect { achievement = NumberJuan.create(player: me) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "Number Juan"
     expect(achievement.description).to eq "Dos no es un ganador y tres nadie recuerda"
-    expect(achievement.badge).to eq "icon-trophy"
+    expect(achievement.badge).to eq "fa fa-trophy"
   end
 
   describe "#eligible" do

@@ -8,6 +8,6 @@ describe Beginner do
     expect { achievement = Beginner.create(player: me) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "Beginner"
     expect(achievement.description).to eq "Welcome to the wonderful game of pong"
-    expect(achievement.badge).to eq "icon-check"
+    expect(achievement.badge).to eq "fa fa-check"
   end
 end

@@ -8,7 +8,7 @@ describe OverlyAttached do
     expect { achievement = OverlyAttached.create(player: me) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "Overly Attached"
     expect(achievement.description).to eq "Last 6 matches were with the same person"
-    expect(achievement.badge).to eq "icon-magnet"
+    expect(achievement.badge).to eq "fa fa-magnet"
   end
 
   describe "#eligible" do

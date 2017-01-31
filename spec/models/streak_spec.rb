@@ -8,7 +8,7 @@ describe Streak do
     expect { achievement = Streak.create(player: me) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "You're on a Streak!"
     expect(achievement.description).to eq "Win 5 matches in a row"
-    expect(achievement.badge).to eq "icon-fire"
+    expect(achievement.badge).to eq "fa fa-fire"
   end
 
   describe "#eligible" do

@@ -8,7 +8,7 @@ describe Inactive do
     expect { achievement = Inactive.create(player: me) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "Where'd You Go?"
     expect(achievement.description).to eq "Gone inactive after 30 days of not playing"
-    expect(achievement.badge).to eq "icon-remove-circle"
+    expect(achievement.badge).to eq "fa fa-minus-circle"
   end
 
   describe "#eligible" do

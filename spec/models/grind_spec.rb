@@ -8,7 +8,7 @@ describe Grind do
     expect { achievement = Grind.create(player: me) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "The Grind"
     expect(achievement.description).to eq "Play 5 consecutive matches without changing rank"
-    expect(achievement.badge).to eq "icon-cogs"
+    expect(achievement.badge).to eq "fa fa-cogs"
   end
 
   describe "#eligible" do

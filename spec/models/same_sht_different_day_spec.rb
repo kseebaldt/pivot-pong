@@ -8,7 +8,7 @@ describe SameShtDifferentDay do
     expect { achievement = SameShtDifferentDay.create(player: me) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "Same Sh*t, Different Day"
     expect(achievement.description).to eq "Stay the same rank 7 matches in a row"
-    expect(achievement.badge).to eq "icon-lock"
+    expect(achievement.badge).to eq "fa fa-lock"
   end
 
   describe "#eligible" do

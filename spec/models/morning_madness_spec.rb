@@ -8,7 +8,7 @@ describe MorningMadness do
     expect { achievement = MorningMadness.create(player: me) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "Morning Madness"
     expect(achievement.description).to eq "Log a match before 9am PST"
-    expect(achievement.badge).to eq "icon-adjust"
+    expect(achievement.badge).to eq "fa fa-adjust"
   end
 
   describe "#eligible" do

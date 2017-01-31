@@ -9,7 +9,7 @@ class BraggingRights < Achievement
     end
 
     def badge
-      "icon-twitter"
+      "fa fa-twitter"
     end
 
     def eligible?(player)
