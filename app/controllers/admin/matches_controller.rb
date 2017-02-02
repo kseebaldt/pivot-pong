@@ -1,6 +1,4 @@
 class Admin::MatchesController < Admin::BaseController
-  include MatchesHelper
-
   def index
     @matches = Match.paginate(:page => params[:page]).order("occured_at DESC")
   end
@@ -15,12 +13,12 @@ class Admin::MatchesController < Admin::BaseController
 
   def update
     @match = Match.find params[:id]
-    winner, loser = params.values_at(:winner_name, :loser_name).map { |name|
-      Player.find_or_create_by(name: name.strip.downcase)
-    }
-    occured_at = params[:match].present? ? params[:match][:occured_at] : Time.current
+    winner = Player.lookup(params[:winner_name])
+    loser = Player.lookup(params[:loser_name])
+    occured_at = params.fetch(:match, {}).fetch(:occured_at, @match.occured_at)
+
     if @match.update_attributes winner: winner, loser: loser, occured_at: occured_at
-      MatchObserver.new.after_save @match
+      MatchObserver.after_save @match
       flash.notice = "Match successfully updated"
       redirect_to admin_matches_path
     else
@@ -30,21 +28,11 @@ class Admin::MatchesController < Admin::BaseController
   end
 
   def create
-    winner, loser = params.values_at(:winner_name, :loser_name).map { |name|
-      Player.find_or_create_by(name: name.strip.downcase)
-    }
+    occurred_at = params.fetch(:match, {})[:occured_at]
+    error_message = MatchRecorder.record winner: params[:winner_name], loser: params[:loser_name], occurred_at: occurred_at
 
-    occured_at = params[:match].present? ? params[:match][:occured_at] : Time.current
-    match = Match.new winner: winner, loser: loser, occured_at: occured_at
-
-    if [winner, loser].all?(&:valid?) && match.save
-      MatchObserver.new.after_save match
-    else
-      if match.errors.present?
-        flash.alert = match.errors.full_messages.join('\n')
-      else
-        flash.alert = "Must specify a winner and a loser to post a match."
-      end
+    if error_message
+      flash.alert = error_message
     end
 
     redirect_to admin_matches_path

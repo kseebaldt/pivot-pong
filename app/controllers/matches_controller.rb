@@ -2,24 +2,12 @@ class MatchesController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: :create
   skip_before_filter :authenticate, only: [:show, :players]
 
-  include MatchesHelper
-
   def create
-    winner, loser = params.values_at(:winner_name, :loser_name).map { |name|
-      Player.find_or_create_by(name: name.strip.downcase)
-    }
+    occurred_at = params.fetch(:match, {})[:occured_at]
+    error_message = MatchRecorder.record winner: params[:winner_name], loser: params[:loser_name], occurred_at: occurred_at
 
-    occured_at = params[:match].present? ? params[:match][:occured_at] : Time.current
-    match = Match.new winner: winner, loser: loser, occured_at: occured_at
-
-    if [winner, loser].all?(&:valid?) && match.save
-      MatchObserver.new.after_save match
-    else
-      if match.errors.present?
-        flash.alert = match.errors.full_messages.join('\n')
-      else
-        flash.alert = "Must specify a winner and a loser to post a match."
-      end
+    if error_message
+      flash.alert = error_message
     end
 
     redirect_to matches_path(d: true)
@@ -48,9 +36,7 @@ class MatchesController < ApplicationController
 
   def players
     if params[:q]
-      queryStart = params[:q].downcase + '%'
-      queryMid = '% ' + params[:q].downcase + '%'
-      names = Player.where(['LOWER(name) LIKE ? OR LOWER(name) LIKE ?', queryStart, queryMid]).collect(&:name)
+      names = Player.search(params[:q]).collect(&:name)
     else
       names = Player.all.collect(&:name)
     end

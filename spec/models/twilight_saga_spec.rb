@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe TwilightSaga do
   let(:me) { Player.create(name: "me") }
@@ -14,7 +14,7 @@ describe TwilightSaga do
   describe "#eligible" do
     let(:you) { Player.create(name: "you") }
     it "Log a match after 6pm PST" do
-      Match.create(winner: me, loser: you, occured_at: (Date.today.beginning_of_day + 20.hours))
+      create(:match, winner: me, loser: you, occured_at: (Date.today.beginning_of_day + 20.hours))
       expect(TwilightSaga.eligible?(me)).to be true
       expect(TwilightSaga.eligible?(you)).to be true
     end

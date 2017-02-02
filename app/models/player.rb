@@ -42,6 +42,15 @@ class Player < ActiveRecord::Base
     end
   end
 
+  def self.search(query)
+    query = query.downcase
+    where('lower(name) like ? or lower(name) like ?', "#{query}%", "% #{query}%")
+  end
+
+  def self.lookup(name)
+    where('lower(name) = ?', name.downcase).first
+  end
+
   def matches
     Match.where("winner_id = ? OR loser_id = ?", id, id)
   end

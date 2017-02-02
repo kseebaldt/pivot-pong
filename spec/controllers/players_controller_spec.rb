@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe PlayersController do
   let(:me) { Player.create(name: "me") }
@@ -7,7 +7,7 @@ describe PlayersController do
 
   describe "GET #show" do
     before do
-      Match.create(winner: me, loser: you)
+      create(:match, winner: me, loser: you)
     end
 
     it "should load the correct player" do
@@ -27,8 +27,8 @@ describe PlayersController do
 
   describe "#odds" do
     it "should render probability base off of existing matches if they exist" do
-      Match.create(winner: me, loser: you, occured_at: 1.day.ago)
-      Match.create(winner: you, loser: me)
+      create(:match, winner: me, loser: you, occured_at: 1.day.ago)
+      create(:match, winner: you, loser: me)
       matches = me.matches.where("winner_id = ? OR loser_id = ?", you.id, you.id)
       expect(matches.count).to eq 2
       get :odds, player_id: me.id, opponent_id: you.id

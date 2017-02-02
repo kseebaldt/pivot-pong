@@ -1,17 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Match do
-  describe "setting default date" do
-    let(:occured_at) { Date.new(2011, 03, 27).to_time }
-    before { allow(Time).to receive(:now).and_return(occured_at) }
-
-    it 'sets the default date to today' do
-      expect(Match.create.occured_at).to eq occured_at
-    end
-  end
-
   describe "validations" do
-    subject { Match.create }
+    subject { Match.new }
     it { should_not be_valid }
   end
 
@@ -21,17 +12,17 @@ describe Match do
     let!(:p3) { Player.create(name: "p3") }
     let!(:p4) { Player.create(name: "p4") }
     let!(:p5) { Player.create(name: "p5") }
-    let(:establishing_match1) { Match.new(winner: p1.reload, loser: p4.reload) }
-    let(:establishing_match2) { Match.new(winner: p3.reload, loser: p4.reload) }
-    let(:establishing_match3) { Match.new(winner: p2.reload, loser: p1.reload) }
+    let(:establishing_match1) { build(:match, winner: p1.reload, loser: p4.reload) }
+    let(:establishing_match2) { build(:match, winner: p3.reload, loser: p4.reload) }
+    let(:establishing_match3) { build(:match, winner: p2.reload, loser: p1.reload) }
 
     before do
       establishing_match1.save!
-      MatchObserver.new.after_save(establishing_match1)
+      MatchObserver.after_save(establishing_match1)
       establishing_match2.save!
-      MatchObserver.new.after_save(establishing_match2)
+      MatchObserver.after_save(establishing_match2)
       establishing_match3.save!
-      MatchObserver.new.after_save(establishing_match3)
+      MatchObserver.after_save(establishing_match3)
       expect(Match.order(:id)).to eq [establishing_match1, establishing_match2, establishing_match3]
       expect(establishing_match1.winner).to eq p1
       expect(establishing_match1.loser).to eq p4
@@ -51,7 +42,7 @@ describe Match do
 
     context "when the players are next to each other" do
       it "should update those players ranks" do
-        MatchObserver.new.after_save Match.create(winner: p3, loser: p2)
+        MatchObserver.after_save create(:match, winner: p3, loser: p2)
 
         expect(p3.reload.rank).to eq 2
         expect(p2.reload.rank).to eq 3
@@ -60,7 +51,7 @@ describe Match do
 
     context "when the winner moves over a single person" do
       it "should update the ranks correctly" do
-        MatchObserver.new.after_save Match.create(winner: p3, loser: p1)
+        MatchObserver.after_save create(:match, winner: p3, loser: p1)
 
         expect(p1.reload.rank).to eq 1
         expect(p3.reload.rank).to eq 2
@@ -73,8 +64,8 @@ describe Match do
         Player.update_all :active => true
         Match.update_all :occured_at => 1.day.ago
         players = Player.all.map{|p|[p.name, p.rank]}
-        m = Match.create(winner: p4, loser: p1)
-        MatchObserver.new.after_save m
+        m = create(:match, winner: p4, loser: p1)
+        MatchObserver.after_save m
 
         expect(p1.reload.rank).to eq 1
         expect(p4.reload.rank).to eq 2
@@ -86,7 +77,7 @@ describe Match do
     context "when the winner doesn't have a rank yet" do
       it "assigns the correct ranks" do
         Player.update_all :active => true
-        MatchObserver.new.after_save Match.create(winner: p5, loser: p2)
+        MatchObserver.after_save create(:match, winner: p5, loser: p2)
 
         expect(p2.reload.rank).to eq 2
         expect(p5.reload.rank).to eq 3
@@ -101,13 +92,13 @@ describe Match do
     let!(:p2) { Player.create(name: "bar") }
     let!(:p3) { Player.create(name: "baz") }
     let!(:p4) { Player.create(name: "quux") }
-    let!(:m1) { Match.create(winner: p4, loser: p2, occured_at: 31.days.ago) }
-    let!(:m2) { Match.create(winner: p1, loser: p3, occured_at: 15.days.ago) }
+    let!(:m1) { create(:match, winner: p4, loser: p2, occured_at: 31.days.ago) }
+    let!(:m2) { create(:match, winner: p1, loser: p3, occured_at: 15.days.ago) }
 
     it "should mark players as inactive who haven't played a game in the last 30 days" do
       Player.update_all :active => true
       expect(p4).to be_active
-      MatchObserver.new.after_save Match.create(winner: p2, loser: p3)
+      MatchObserver.after_save create(:match, winner: p2, loser: p3)
       expect(p1.reload).to be_active
       expect(p2.reload).to be_active
       expect(p3.reload).to be_active
@@ -117,7 +108,7 @@ describe Match do
     it "should award players who are inactive with Inactive achievement if they don't have it" do
       Player.update_all :active => true
       expect(p4).to be_active
-      MatchObserver.new.after_save Match.create(winner: p2, loser: p3)
+      MatchObserver.after_save create(:match, winner: p2, loser: p3)
       expect(p1.reload).to be_active
       expect(p2.reload).to be_active
       expect(p3.reload).to be_active
@@ -129,7 +120,7 @@ describe Match do
       Player.update_all :active => true
       new_player = Player.create(name: "no matches")
       expect(new_player).to be_active
-      MatchObserver.new.after_save Match.create(winner: p2, loser: p3)
+      MatchObserver.after_save create(:match, winner: p2, loser: p3)
       expect(new_player.reload).to be_inactive
     end
 
@@ -140,7 +131,7 @@ describe Match do
       p1.reload.update_attribute :rank, 3
       p3.reload.update_attribute :rank, 4
 
-      MatchObserver.new.after_save Match.create(winner: p4, loser: p3)
+      MatchObserver.after_save create(:match, winner: p4, loser: p3)
       expect(p4.reload.rank).to eq 1
       expect(p2.reload.rank).to be_nil
       expect(p2).to be_inactive
@@ -157,12 +148,12 @@ describe Match do
       p2.update_attributes(rank: nil, active: false)
     end
     it "should reactivate inactive players when they win a match" do
-      Match.create(winner: p1, loser: p2)
+      create(:match, winner: p1, loser: p2)
       expect(p1.reload).to be_active
     end
 
     it "should reactivate inactive players when the lose a match" do
-      Match.create(winner: p2, loser: p1)
+      create(:match, winner: p2, loser: p1)
       expect(p1.reload).to be_active
     end
   end

@@ -7,3 +7,4 @@ log/
 config/database.yml
 .sass-cache/
 public/uploads
+spec/examples.txt

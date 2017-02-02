@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Totem do
   let(:me) { Player.create(name: 'me') }

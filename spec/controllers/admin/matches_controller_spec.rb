@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Admin::MatchesController do
   let!(:p1) { Player.create name: 'me' }
@@ -14,22 +14,22 @@ describe Admin::MatchesController do
 
   describe "#create" do
     it "should create a new match" do
-      expect { get :create, winner_name: p1.display_name, loser_name: p2.display_name }.to change(Match, :count).by(1)
+      expect { put :create, winner_name: p1.display_name, loser_name: p2.display_name, match: { occured_at: '2014-02-22' } }.to change(Match, :count).by(1)
       expect(response).to redirect_to admin_matches_path
     end
   end
 
   describe "#destroy" do
     it "should delete a match" do
-      match = Match.create winner: p1, loser: p2
-      expect { get :destroy, id: match.id }.to change(Match, :count).by(-1)
+      match = create :match, winner: p1, loser: p2
+      expect { delete :destroy, id: match.id }.to change(Match, :count).by(-1)
       expect(response).to redirect_to admin_matches_path
     end
   end
 
   describe "#edit" do
     it "should delete a match" do
-      match = Match.create winner: p1, loser: p2
+      match = create :match, winner: p1, loser: p2
       get :edit, id: match.id
       expect(assigns[:match]).to eq match
     end
@@ -37,8 +37,8 @@ describe Admin::MatchesController do
 
   describe "#update" do
     it "should update a match" do
-      match = Match.create winner: p1, loser: p2
-      get :update, id: match.id, winner_name: p2.display_name, loser_name: p1.display_name
+      match = create :match, winner: p1, loser: p2
+      post :update, id: match.id, winner_name: p2.display_name, loser_name: p1.display_name
       expect(match.reload.winner).to eq p2
       expect(response).to redirect_to admin_matches_path
     end

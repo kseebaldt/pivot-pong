@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Achievement do
   let(:me) { Player.create(name: "me") }

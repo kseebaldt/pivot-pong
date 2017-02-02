@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe MorningMadness do
   let(:me) { Player.create(name: "me") }
@@ -14,7 +14,7 @@ describe MorningMadness do
   describe "#eligible" do
     let(:you) { Player.create(name: "you") }
     it "Log a match before 9am PST" do
-      Match.create(winner: me, loser: you, occured_at: (Date.today.beginning_of_day + 8.hours))
+      create(:match, winner: me, loser: you, occured_at: (Date.today.beginning_of_day + 8.hours))
       expect(MorningMadness.eligible?(me)).to be true
       expect(MorningMadness.eligible?(you)).to be true
     end

@@ -1,11 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe StatsController do
   describe "display average games per day" do
     let(:me) { Player.create(name: 'Me') }
     let(:you) { Player.create(name: 'You') }
     it "GET index" do
-      Match.create(winner: me, loser: you)
+      create(:match, winner: me, loser: you)
       get :index
       expect(assigns(:average_games_per_day)).to eq 1
       expect(assigns(:matches_labels).sort).to eq ['Me - 1','You - 1']

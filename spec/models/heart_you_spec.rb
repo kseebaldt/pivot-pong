@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe HeartYou do
   let(:me) { Player.create(name: "me") }
@@ -14,9 +14,9 @@ describe HeartYou do
   describe "#eligible" do
     let(:you) { Player.create(name: "you") }
     it "should be eligible if your last 3 matches logged were with the same person" do
-      Match.create(winner: me, loser: you, occured_at: 3.days.ago)
-      Match.create(winner: me, loser: you, occured_at: 2.days.ago)
-      Match.create(winner: me, loser: you, occured_at: 1.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 3.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 2.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 1.days.ago)
       expect(HeartYou.eligible?(me)).to be true
     end
   end

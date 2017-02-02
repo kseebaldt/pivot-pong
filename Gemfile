@@ -27,4 +27,5 @@ group :test, :development do
   gem 'rspec-rails'
   gem 'awesome_print'
   gem 'timecop'
+  gem 'factory_girl_rails'
 end

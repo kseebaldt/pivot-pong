@@ -8,4 +8,4 @@ env:
   pong_location: Seattle
 applications:
   - name: seattle-pong
-    command: bundle exec rake db:migrate && bundle exec rails s -p $PORT
+    command: bundle exec rake server

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Player do
   it 'should preserve case of names' do
@@ -20,7 +20,7 @@ describe Player do
     expect(p1.rank).to_not eq p2.rank
   end
 
-  it "requires a name" do
+  it 'requires a name' do
     expect(Player.new).to_not be_valid
   end
 
@@ -28,12 +28,11 @@ describe Player do
     expect(Player.create(name: 'scooby Doo').display_name).to eq('scooby Doo')
   end
 
-  describe "ranked" do
-    let!(:me) { Player.create(name: "me") }
-    let!(:you) { Player.create(name: "you") }
-    let!(:us) { Player.create(name: "us") }
-    subject { Player.ranked }
-    it { should == [me, you, us] }
+  it 'gets players in ranked order' do
+    me = Player.create(name: "me")
+    you = Player.create(name: "you")
+    us = Player.create(name: "us")
+    expect(Player.ranked).to eq [me, you, us]
   end
 
   describe ".active and .inactive" do
@@ -60,31 +59,20 @@ describe Player do
   end
 
   describe "#matches" do
-    let!(:player) { Player.create(name: "me") }
-    subject { player.matches }
-    let!(:opponent) { Player.create(name: "you") }
-    let!(:m1) { Match.create(winner: player, loser: opponent) }
-    it { should == [m1] }
+    let!(:player) { create(:player) }
+    let!(:m1) { create(:match, winner: player, occured_at: 1.day.ago) }
+    let!(:m2) { create(:match, loser: player) }
 
-    before do
-      Match.update_all :occured_at => 1.day.ago
-    end
-    context "multiple matches" do
-      let!(:m2) { Match.create(winner: opponent, loser: player) }
-      it { should == [m1, m2] }
-
-      context "with retro-actively created matches" do
-        let!(:m3) { Match.create(winner: player, loser: opponent, occured_at: 1.day.ago) }
-        it { should == [m1, m2] }
-      end
+    it 'lists all of the players matches' do
+      expect(player.matches).to match_array([m1, m2])
     end
   end
 
   describe "#most_recent_opponent" do
     it "should return the most recent opponent" do
-      me = Player.create(name: "me")
-      you = Player.create(name: "you")
-      Match.create(winner: me, loser: you)
+      me = create(:player)
+      you = create(:player)
+      create(:match, winner: me, loser: you)
       expect(me.most_recent_opponent).to eq you
       expect(you.most_recent_opponent).to eq me
     end
@@ -103,6 +91,19 @@ describe Player do
       expect(p2.reload.rank).to eq 2
       expect(p3.reload.rank).to eq 3
       expect(p4.reload.rank).to eq 4
+    end
+  end
+
+  describe ".search" do
+    before do
+      @danny = Player.create! name: 'Danny Burkes'
+      @edward = Player.create! name: 'Edward Hieatt'
+      @noah = Player.create! name: 'Noah Denton'
+    end
+
+    it 'finds players who have a name part that starts with the query' do
+      expect(Player.search('d')).to match_array([@danny, @noah])
+      expect(Player.search('H')).to match_array([@edward])
     end
   end
 end

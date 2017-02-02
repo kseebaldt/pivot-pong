@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Lemons do
   let(:me) { Player.create(name: "me") }
@@ -15,21 +15,21 @@ describe Lemons do
     let(:you) { Player.create(name: "you") }
 
     it "should be eligible if you lose 5 matches in a row" do
-      Match.create(winner: me, loser: you, occured_at: 5.days.ago)
-      Match.create(winner: me, loser: you, occured_at: 4.days.ago)
-      Match.create(winner: me, loser: you, occured_at: 3.days.ago)
-      Match.create(winner: me, loser: you, occured_at: 2.days.ago)
-      Match.create(winner: me, loser: you, occured_at: 1.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 5.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 4.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 3.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 2.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 1.days.ago)
       expect(Lemons.eligible?(you)).to be true
       expect(Lemons.eligible?(me)).to be false
     end
 
     it "should be not eligible if you don't lose 5 matches in a row" do
-      Match.create(winner: me, loser: you, occured_at: 5.days.ago)
-      Match.create(winner: me, loser: you, occured_at: 4.days.ago)
-      Match.create(winner: you, loser: me, occured_at: 3.days.ago)
-      Match.create(winner: me, loser: you, occured_at: 2.days.ago)
-      Match.create(winner: me, loser: you, occured_at: 1.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 5.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 4.days.ago)
+      create(:match, winner: you, loser: me, occured_at: 3.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 2.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 1.days.ago)
       expect(Lemons.eligible?(me)).to be false
       expect(Lemons.eligible?(you)).to be false
     end

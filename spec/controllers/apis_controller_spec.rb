@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe ApisController do
   describe "#tweet" do
     let(:me) { Player.create(name: "me") }
     let(:you) { Player.create(name: "you") }
-    let!(:match) { Match.create(winner: me, loser: you) }
+    let!(:match) { create(:match, winner: me, loser: you) }
 
     it "should award the Bragging Rights badge to the winner" do
       expect { get :tweet, match_id: match.id }.to change(BraggingRights, :count).by(1)

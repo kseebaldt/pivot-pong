@@ -1,7 +1,7 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe WelcomeMat do
-  let(:me) { Player.create(name: "me") }
+  let(:me) { create(:player) }
 
   it "should populate achievement specific attributes to achievement on create" do
     achievement = nil
@@ -12,10 +12,10 @@ describe WelcomeMat do
   end
 
   describe "#eligible" do
-    let(:you) { Player.create(name: "you") }
-    let(:him) { Player.create(name: "him") }
-    let!(:match) { Match.create(winner: me, loser: you) }
-    let!(:match_2) { Match.create(winner: me, loser: him) }
+    let(:you) { create(:player) }
+    let(:him) { create(:player) }
+    let!(:match) { create(:match, winner: me, loser: you) }
+    let!(:match_2) { create(:match, winner: me, loser: him) }
 
     it "should be eligible if you play someone not yet on the ladder(only 1 match)" do
       expect(me.matches.size).to eq 2

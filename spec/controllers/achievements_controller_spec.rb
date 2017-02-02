@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe AchievementsController do
   it "can show a list of achievements" do

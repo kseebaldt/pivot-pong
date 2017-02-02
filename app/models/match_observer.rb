@@ -1,15 +1,27 @@
-class MatchObserver #< ActiveRecord::Observer
-  def after_save(match)
-    update_player_ranks(match)
-    create_logs(match)
-    check_achievements(match)
-    check_totems(match)
+class MatchObserver
+  def self.after_save(match)
+    observer = new(match)
+
+    observer.after_save
+  end
+
+  def initialize(match)
+    @match = match
+  end
+
+  def after_save
+    update_player_ranks
+    create_logs
+    check_achievements
+    check_totems
     mark_inactive_players
   end
 
   private
 
-  def update_player_ranks(match)
+  attr_reader :match
+
+  def update_player_ranks
     winner = match.winner
     winner_rank = winner.rank || Player.maximum(:rank) + 1
     loser = match.loser
@@ -28,14 +40,14 @@ class MatchObserver #< ActiveRecord::Observer
     loser.update_attributes(rank: loser_rank, active: true) if !loser.active?
   end
 
-  def create_logs(match)
+  def create_logs
     winner = match.winner
     loser = match.loser
     winner.logs.create(match: match, rank: winner.rank)
     loser.logs.create(match: match, rank: loser.rank)
   end
 
-  def check_achievements(match)
+  def check_achievements
     winner = match.winner
     loser = match.loser
     achievements = Achievement.subclasses
@@ -51,7 +63,7 @@ class MatchObserver #< ActiveRecord::Observer
     end
   end
 
-  def check_totems(match)
+  def check_totems
     winner = match.winner
     loser = match.loser
     winner.totems.find_or_create_by(loser_id: loser.id)

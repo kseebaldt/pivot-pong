@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "matches/rankings.html.haml" do
   let(:me) { Player.create(name: "me") }

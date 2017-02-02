@@ -60,6 +60,11 @@ GEM
     erubis (2.7.0)
     excon (0.54.0)
     execjs (2.7.0)
+    factory_girl (4.8.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.8.0)
+      factory_girl (~> 4.8.0)
+      railties (>= 3.0.0)
     fission (0.5.0)
       CFPropertyList (~> 2.2)
     fog (1.38.0)
@@ -335,6 +340,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   carrierwave
+  factory_girl_rails
   fog
   font-awesome-rails
   haml-rails
