@@ -8,7 +8,7 @@ describe MatchRecorder do
   it 'makes a match and players' do
     expect do
       expect do
-        errors = MatchRecorder.record(winner: 'foo', loser: 'bar', occurred_at: Date.new(2015, 1, 5))
+        errors = MatchRecorder.record(winner: 'foo', loser: 'bar', occurred_at: Time.new(2015, 1, 5))
         expect(errors).to be_nil
       end.to change(Match, :count).by(1)
     end.to change(Player, :count).by(2)
