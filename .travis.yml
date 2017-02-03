@@ -4,5 +4,5 @@ cache: bundler
 sudo: false
 env:
   global:
-  - secure: HHL1vkvDju3DnoHwXKTcNkpNFNoIxLVdIaLBswYDxjDrt/cN9pxFhhHzUypM8Rf0pTPvfZ3gpg7o/pkba2iT0+xveeMOKpoaVsT14UI/bSDgtZmu+gD0Zj+iVvZ1maAyR2R813GWi6/svEMY49iTGefHdXtBmhd5Y9bv1hs3WDY=
-  - secure: CjZI9S5DHiJ/nVq9D4a0LxYZXnIys2mqOTH6xg27KMbq5Av4c8zfZoVPi2/MnqMHQDXBrfCAD/cOOXx6KopyyDdmly3ivbFsLxHQF1wWESeAfVdIpROWqklOvi6DpgxqCBehtFfSQRhlz7+PgXrBkO7IkuPJzyJGWyY9IPpA6AI=
+  - secure: d/bsTTV4V60GeCvu90S9WAggLpuGeW2S5TJTVgGTcoV6JC1hDJLD6+C8UB4ZZrj7PjBG6f0rES7WUyQjJecaS86WvOAnPtNCW94A9XUIi0SGiYbmW/rGoG3XGEiLdOSjYfaNqVCF9Z9zsRdgeMFMG+7n4ykl/VBpgKTMrX7GkpI=
+  - secure: I9Qo8oGlsHhhwqkKoJ8h9Rjf1xC45SPRN40URrJZb9wC4+CydwvWhO19Xf0YQU4Qt6rDjiWDJQevKTsVGSe9NThRIx2d/OsNBMfGwwfcUxTZJU0pbdxW6R5r+c9SSTvnSRoFvACDSynAM0DB+NxjPNrZCPL3WyxgS/k6wEmysHU=
