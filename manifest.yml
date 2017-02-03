@@ -2,10 +2,13 @@
 buildpack: ruby_buildpack
 services:
   - database
+  - secrets
+  - admin_account
+  - AWS_S3
 env:
   RACK_ENV: production
   RAILS_ENV: production
   pong_location: Seattle
 applications:
   - name: seattle-pong
-    command: bundle exec rake db:migrate && bundle exec rails s -p $PORT
+    command: bundle exec rake server:start

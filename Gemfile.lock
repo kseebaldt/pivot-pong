@@ -1,4 +1,10 @@
 GIT
+  remote: https://github.com/cloudfoundry/cf-app-utils-ruby.git
+  revision: 3935047386884ae125a7e6fd9a202d1cc4b45f35
+  specs:
+    cf-app-utils (0.6)
+
+GIT
   remote: https://github.com/seyhunak/twitter-bootstrap-rails.git
   revision: 14e846e2a14bd8cae15e0ba9006540a7a1a1afde
   specs:
@@ -340,6 +346,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   carrierwave
+  cf-app-utils!
   factory_girl_rails
   fog
   font-awesome-rails

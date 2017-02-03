@@ -20,6 +20,7 @@ gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-boot
 gem 'will_paginate'
 gem 'rails_12factor'
 gem 'puma'
+gem 'cf-app-utils', :git => 'https://github.com/cloudfoundry/cf-app-utils-ruby.git'
 
 group :test, :development do
   gem 'hashie'

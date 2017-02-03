@@ -6,3 +6,8 @@ tmp/
 .idea/
 public/system
 spec
+test
+.rspec
+.travis.yml
+README.*
+.pairs
