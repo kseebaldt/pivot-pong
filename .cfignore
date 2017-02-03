@@ -11,3 +11,4 @@ test
 .travis.yml
 README.*
 .pairs
+deploy.sh
