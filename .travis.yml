@@ -1,5 +1,5 @@
 language: ruby
-before_install: ./install_cf.sh
+#before_install: ./install_cf.sh
 before_script: cp config/database.yml{.example,} ; bundle exec rake db:create:all db:migrate db:test:prepare
 script:
 - bundle exec rake
