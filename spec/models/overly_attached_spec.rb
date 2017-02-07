@@ -20,7 +20,26 @@ describe OverlyAttached do
       create(:match, winner: me, loser: you, occured_at: 3.days.ago)
       create(:match, winner: me, loser: you, occured_at: 2.days.ago)
       create(:match, winner: me, loser: you, occured_at: 1.days.ago)
-      expect(HeartYou.eligible?(me)).to be true
+      expect(OverlyAttached.eligible?(me)).to be true
+    end
+
+    it "should not be eligible if less than 6 matches are logged" do
+      create(:match, winner: me, loser: you, occured_at: 5.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 4.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 3.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 2.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 1.days.ago)
+      expect(OverlyAttached.eligible?(me)).to be false
+    end
+
+    it "should not be eligible if you played more than one different opponent over you last 6 matches" do
+      create(:match, winner: me, loser: you, occured_at: 6.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 5.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 4.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 3.days.ago)
+      create(:match, winner: me, loser: you, occured_at: 2.days.ago)
+      create(:match, winner: me, loser: create(:player), occured_at: 1.days.ago)
+      expect(OverlyAttached.eligible?(me)).to be false
     end
   end
 end

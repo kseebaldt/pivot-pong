@@ -18,5 +18,19 @@ describe SameShtDifferentDay do
       allow(me).to receive_message_chain(:logs, :descending, :limit).and_return(logs)
       expect(SameShtDifferentDay.eligible?(me)).to be true
     end
+
+    it "should not be eligible if you played less than 7 matches" do
+      logs = []
+      6.times{ logs << Hashie::Mash.new(rank: 2) }
+      allow(me).to receive_message_chain(:logs, :descending, :limit).and_return(logs)
+      expect(SameShtDifferentDay.eligible?(me)).to eq false
+    end
+
+    it "should not be eligible if you changed rank within the last 7 matches" do
+      logs = [Hashie::Mash.new(rank: 1)]
+      6.times{ logs << Hashie::Mash.new(rank: 2) }
+      allow(me).to receive_message_chain(:logs, :descending, :limit).and_return(logs)
+      expect(SameShtDifferentDay.eligible?(me)).to eq false
+    end
   end
 end

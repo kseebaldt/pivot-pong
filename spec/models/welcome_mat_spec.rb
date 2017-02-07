@@ -21,7 +21,7 @@ describe WelcomeMat do
       expect(me.matches.size).to eq 2
       expect(him.matches.size).to eq 1
       expect(WelcomeMat.eligible?(me)).to be true
-      expect(WelcomeMat.eligible?(him)).to_not be true
+      expect(WelcomeMat.eligible?(him)).to be false
     end
   end
 end

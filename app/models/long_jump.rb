@@ -16,8 +16,7 @@ class LongJump < Achievement
       logs = player.logs.descending.limit(2)
       return false if logs.size != 2
       recent_rank, previous_rank = logs.map(&:rank)
-      return false if (previous_rank - recent_rank) < 4
-      true
+      return previous_rank - recent_rank > 3
     end
   end
 end

@@ -14,8 +14,8 @@ class SameShtDifferentDay < Achievement
 
     def eligible?(player)
       last_7_logs = player.logs.descending.limit(7)
-      return false if last_7_logs.size < 7 || (last_7_logs.map(&:rank).uniq.size > 1)
-      true
+      return false if last_7_logs.size < 7
+      return last_7_logs.map(&:rank).uniq.size == 1
     end
   end
 end

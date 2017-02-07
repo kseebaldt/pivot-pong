@@ -18,5 +18,12 @@ describe LongJump do
       allow(me).to receive_message_chain(:logs, :descending, :limit).and_return([log_1, log_2])
       expect(LongJump.eligible?(me)).to be true
     end
+
+    it "should not be eligible if your diff of last 2 logs increased your rank by less than 4" do
+      log_1 = Hashie::Mash.new(rank: 1)
+      log_2 = Hashie::Mash.new(rank: 4)
+      allow(me).to receive_message_chain(:logs, :descending, :limit).and_return([log_1, log_2])
+      expect(LongJump.eligible?(me)).to be false
+    end
   end
 end

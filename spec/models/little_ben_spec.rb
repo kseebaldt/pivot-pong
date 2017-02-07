@@ -16,5 +16,10 @@ describe LittleBen do
       allow(me).to receive_message_chain(:matches, :descending, :limit, :size).and_return(50)
       expect(LittleBen.eligible?(me)).to be true
     end
+
+    it "should not be eligible if you have logged less than 50 matches" do
+      allow(me).to receive_message_chain(:matches, :descending, :limit, :size).and_return(49)
+      expect(LittleBen.eligible?(me)).to be false
+    end
   end
 end

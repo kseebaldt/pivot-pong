@@ -16,5 +16,10 @@ describe WorkingHard do
       allow(me).to receive_message_chain(:matches, :occurred_today, :size).and_return(6)
       expect(WorkingHard.eligible?(me)).to be true
     end
+
+    it "should not be eligible if you log less than matches in a single day" do
+      allow(me).to receive_message_chain(:matches, :occurred_today, :size).and_return(5)
+      expect(WorkingHard.eligible?(me)).to be false
+    end
   end
 end

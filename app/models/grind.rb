@@ -14,8 +14,8 @@ class Grind < Achievement
 
     def eligible?(player)
       last_5_logs = player.logs.descending.limit(5)
-      return false if (last_5_logs.size < 5) || (last_5_logs.map(&:rank).uniq.size != 1)
-      true
+      return false if last_5_logs.size < 5
+      return last_5_logs.map(&:rank).uniq.size == 1
     end
   end
 end

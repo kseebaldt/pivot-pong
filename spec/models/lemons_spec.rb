@@ -1,4 +1,4 @@
-require 'rails_helper'
+ require 'rails_helper'
 
 describe Lemons do
   let(:me) { Player.create(name: "me") }
