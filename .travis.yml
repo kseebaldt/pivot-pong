@@ -1,8 +1,5 @@
 language: ruby
-before_install:
-- wget -O cf-cli.tgz https://cli.run.pivotal.io/stable?release=linux64-binary&source=github
-- mkdir -p cf-bin
-- tar -xzf cf-cli.tgz -C cf-bin
+before_install: ./install_cf.sh
 before_script: cp config/database.yml{.example,} ; bundle exec rake db:create:all db:migrate db:test:prepare
 script:
 - bundle exec rake
