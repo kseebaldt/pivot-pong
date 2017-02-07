@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eu -o pipefail
+set -euv -o pipefail
 
 mkdir -p cf-bin
 
