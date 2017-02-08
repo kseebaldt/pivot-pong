@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
 
-set -eu -o pipefail
+if [ -f cf-bin/cf ]
+then
+        echo 'already have cf'
+        exit 0
+fi
+
+set -euv -o pipefail
 
 mkdir -p cf-bin
-
-wget --output-document=cf-bin/cf-cli.tgz https://cli.run.pivotal.io/stable?release=linux64-binary&source=github
-
 cd cf-bin
-ls
+
+wget --no-background -O cf-cli.tgz https://cli.run.pivotal.io/stable?release=linux64-binary&source=github
+
+sleep 30
 tar -xzf cf-cli.tgz
+rm cf-cli.tgz
