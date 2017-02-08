@@ -9,6 +9,8 @@ cache:
   bundler: true
   directories:
   - cf-bin
+after_failure:
+- ./cleanup_cf.sh
 sudo: false
 env:
   global:
