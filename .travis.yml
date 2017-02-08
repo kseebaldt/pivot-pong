@@ -1,12 +1,14 @@
 language: ruby
-install:
+before_install:
 - ./install_cf.sh
-- bundle install --jobs=3 --retry=3 --deployment --path=${BUNDLE_PATH:-vendor/bundle}
 before_script: cp config/database.yml{.example,} ; bundle exec rake db:create:all db:migrate db:test:prepare
 script:
 - bundle exec rake
 - ./deploy.sh
-cache: bundler
+cache:
+  bundler: true
+  directories:
+  - cf-bin
 sudo: false
 env:
   global:
