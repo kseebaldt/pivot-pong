@@ -8,4 +8,4 @@ set -eu -o pipefail
 
 ./cf-bin/cf push seattle-pong
 
-./cf-bin/cf delete seattle-pong-old
+./cf-bin/cf delete -f seattle-pong-old
