@@ -14,4 +14,5 @@ README.*
 .pairs
 deploy.sh
 install_cf.sh
+cleanup_cf.sh
 cf-bin
