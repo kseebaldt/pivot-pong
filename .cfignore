@@ -12,3 +12,4 @@ test
 README.*
 .pairs
 deploy.sh
+install_cf.sh
