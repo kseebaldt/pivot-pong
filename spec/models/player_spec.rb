@@ -60,7 +60,7 @@ describe Player do
 
   describe "#matches" do
     let!(:player) { create(:player) }
-    let!(:m1) { create(:match, winner: player, occured_at: 1.day.ago) }
+    let!(:m1) { create(:match, winner: player, occurred_at: 1.day.ago) }
     let!(:m2) { create(:match, loser: player) }
 
     it 'lists all of the players matches' do

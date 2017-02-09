@@ -13,7 +13,7 @@ describe PlayersController do
     it "should load the correct player" do
       get :show, id: me.to_param
       expect(assigns(:player)).to eq me
-      expect(assigns(:matches)).to eq me.matches.paginate(:page => 1).order("occured_at DESC")
+      expect(assigns(:matches)).to eq me.matches.paginate(:page => 1).order("occurred_at DESC")
       expect(assigns(:average_games_per_day)).to eq 1
       expect(response).to be_success
     end
@@ -27,7 +27,7 @@ describe PlayersController do
 
   describe "#odds" do
     it "should render probability base off of existing matches if they exist" do
-      create(:match, winner: me, loser: you, occured_at: 1.day.ago)
+      create(:match, winner: me, loser: you, occurred_at: 1.day.ago)
       create(:match, winner: you, loser: me)
       matches = me.matches.where("winner_id = ? OR loser_id = ?", you.id, you.id)
       expect(matches.count).to eq 2

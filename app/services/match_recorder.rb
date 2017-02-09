@@ -11,7 +11,7 @@ module MatchRecorder
     winning_player = get_player(winner)
     losing_player = get_player(loser)
 
-    match = Match.create(winner: winning_player, loser: losing_player, occured_at: occurred_at)
+    match = Match.create(winner: winning_player, loser: losing_player, occurred_at: occurred_at)
     if match.valid?
       MatchObserver.after_save(match)
       nil

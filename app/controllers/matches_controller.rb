@@ -3,7 +3,7 @@ class MatchesController < ApplicationController
   skip_before_filter :authenticate, only: [:show, :players]
 
   def create
-    occurred_at = params.fetch(:match, {})[:occured_at]
+    occurred_at = params.fetch(:match, {})[:occurred_at]
     error_message = MatchRecorder.record winner: params[:winner_name], loser: params[:loser_name], occurred_at: occurred_at
 
     if error_message
@@ -20,7 +20,7 @@ class MatchesController < ApplicationController
 
   def index
     @match = Match.new
-    @matches = Match.paginate(:page => params[:page]).order("occured_at DESC")
+    @matches = Match.paginate(:page => params[:page]).order("occurred_at DESC")
     @most_recent_match = Match.find_by_id(params[:d]) || @matches.first if params[:d]
   end
 

@@ -10,7 +10,7 @@ class StatsController < ApplicationController
     @winning_matches = []
     @winning_percentage_labels = []
     @winning_percentage = []
-    games_hash = Match.group("DATE(occured_at)").count
+    games_hash = Match.group("DATE(occurred_at)").count
     @average_games_per_day = games_hash.values.sum.to_f/games_hash.keys.count.to_f
     Player.all.each do |p|
       match_count = p.matches.count

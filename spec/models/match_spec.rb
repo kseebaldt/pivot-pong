@@ -62,7 +62,7 @@ describe Match do
     context "moving halfway to the loser" do
       it "should update intermediary players correctly" do
         Player.update_all :active => true
-        Match.update_all :occured_at => 1.day.ago
+        Match.update_all :occurred_at => 1.day.ago
         players = Player.all.map{|p|[p.name, p.rank]}
         m = create(:match, winner: p4, loser: p1)
         MatchObserver.after_save m
@@ -92,8 +92,8 @@ describe Match do
     let!(:p2) { Player.create(name: "bar") }
     let!(:p3) { Player.create(name: "baz") }
     let!(:p4) { Player.create(name: "quux") }
-    let!(:m1) { create(:match, winner: p4, loser: p2, occured_at: 31.days.ago) }
-    let!(:m2) { create(:match, winner: p1, loser: p3, occured_at: 15.days.ago) }
+    let!(:m1) { create(:match, winner: p4, loser: p2, occurred_at: 31.days.ago) }
+    let!(:m2) { create(:match, winner: p1, loser: p3, occurred_at: 15.days.ago) }
 
     it "should mark players as inactive who haven't played a game in the last 30 days" do
       Player.update_all :active => true

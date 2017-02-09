@@ -1,6 +1,6 @@
 class Admin::MatchesController < Admin::BaseController
   def index
-    @matches = Match.paginate(:page => params[:page]).order("occured_at DESC")
+    @matches = Match.paginate(:page => params[:page]).order("occurred_at DESC")
   end
 
   def new
@@ -15,9 +15,9 @@ class Admin::MatchesController < Admin::BaseController
     @match = Match.find params[:id]
     winner = Player.lookup(params[:winner_name])
     loser = Player.lookup(params[:loser_name])
-    occured_at = params.fetch(:match, {}).fetch(:occured_at, @match.occured_at)
+    occurred_at = params.fetch(:match, {}).fetch(:occurred_at, @match.occurred_at)
 
-    if @match.update_attributes winner: winner, loser: loser, occured_at: occured_at
+    if @match.update_attributes winner: winner, loser: loser, occurred_at: occurred_at
       MatchObserver.after_save @match
       flash.notice = "Match successfully updated"
       redirect_to admin_matches_path
@@ -28,7 +28,7 @@ class Admin::MatchesController < Admin::BaseController
   end
 
   def create
-    occurred_at = params.fetch(:match, {})[:occured_at]
+    occurred_at = params.fetch(:match, {})[:occurred_at]
     error_message = MatchRecorder.record winner: params[:winner_name], loser: params[:loser_name], occurred_at: occurred_at
 
     if error_message

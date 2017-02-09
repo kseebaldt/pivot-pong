@@ -14,7 +14,7 @@ describe Admin::MatchesController do
 
   describe "#create" do
     it "should create a new match" do
-      expect { put :create, winner_name: p1.display_name, loser_name: p2.display_name, match: { occured_at: '2014-02-22' } }.to change(Match, :count).by(1)
+      expect { put :create, winner_name: p1.display_name, loser_name: p2.display_name, match: { occurred_at: '2014-02-22' } }.to change(Match, :count).by(1)
       expect(response).to redirect_to admin_matches_path
     end
   end

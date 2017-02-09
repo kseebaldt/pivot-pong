@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170206202616) do
+ActiveRecord::Schema.define(version: 20170209194842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,13 +41,13 @@ ActiveRecord::Schema.define(version: 20170206202616) do
     t.integer  "rank"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "occured_at"
+    t.datetime "occurred_at"
   end
 
   create_table "matches", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "occured_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.datetime "occurred_at"
     t.integer  "winner_id"
     t.integer  "loser_id"
   end

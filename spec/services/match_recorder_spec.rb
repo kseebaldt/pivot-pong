@@ -14,7 +14,7 @@ describe MatchRecorder do
     end.to change(Player, :count).by(2)
 
     match = Match.last
-    expect(match.occured_at).to eq(Time.new(2015, 1, 5))
+    expect(match.occurred_at).to eq(Time.new(2015, 1, 5))
     expect(match.winner.name).to eq 'foo'
     expect(match.loser.name).to eq 'bar'
   end
@@ -40,12 +40,12 @@ describe MatchRecorder do
     expect(MatchObserver).not_to have_received(:after_save)
   end
 
-  it 'sets a default occured_at to now' do
+  it 'sets a default occurred_at to now' do
     travel_to Time.new(2014, 3, 2, 9, 30, 0) do
       MatchRecorder.record(winner: 'foo', loser: 'bar', occurred_at: '')
     end
 
-    expect(Match.last.occured_at).to eq(Time.new(2014, 3, 2, 9, 30, 0))
+    expect(Match.last.occurred_at).to eq(Time.new(2014, 3, 2, 9, 30, 0))
   end
 
   it 'reports all the errors when a match failed to save' do

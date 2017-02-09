@@ -73,7 +73,7 @@ class MatchObserver
   def mark_inactive_players
     cutoff = 30.days.ago
     Player.active.each do |player|
-      if player.most_recent_match.nil? || (player.most_recent_match.occured_at < cutoff)
+      if player.most_recent_match.nil? || (player.most_recent_match.occurred_at < cutoff)
         player.update_attributes! :active => false
         Inactive.create(player: player) if !player.achievements.map(&:class).include?(Inactive)
       end

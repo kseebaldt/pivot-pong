@@ -4,7 +4,7 @@ describe MatchObserver do
   let(:me) { Player.create!(name: 'me') }
   let(:you) { Player.create!(name: 'you') }
   let(:observer) { MatchObserver.new(match) }
-  let(:match) { Match.new(winner: you, loser: me, occured_at: Time.current) }
+  let(:match) { Match.new(winner: you, loser: me, occurred_at: Time.current) }
 
   describe "#after_save" do
     it "should make the appropriate method calls" do

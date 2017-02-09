@@ -14,7 +14,7 @@ class TwilightSaga < Achievement
 
     def eligible?(player)
       match = player.most_recent_match
-      (match.occured_at > Date.today.beginning_of_day + 18.hours) && (match.occured_at < Date.today.end_of_day)
+      (match.occurred_at > Date.today.beginning_of_day + 18.hours) && (match.occurred_at < Date.today.end_of_day)
     end
   end
 end

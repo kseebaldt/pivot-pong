@@ -14,7 +14,7 @@ class MorningMadness < Achievement
 
     def eligible?(player)
       match = player.most_recent_match
-      (match.occured_at > Date.today.beginning_of_day) && (match.occured_at.hour < 9)
+      (match.occurred_at > Date.today.beginning_of_day) && (match.occurred_at.hour < 9)
     end
   end
 end

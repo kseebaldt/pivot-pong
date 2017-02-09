@@ -3,7 +3,7 @@ class SaveRankingsToPlayer
     Player.update_all(:rank => nil)
 
     ranking = []
-    Match.order("occured_at asc").each do |match|
+    Match.order("occurred_at asc").each do |match|
       winner = match.winner
       loser = match.loser
 

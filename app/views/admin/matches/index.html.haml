@@ -10,7 +10,7 @@
     %th.action
   - @matches.each do |match|
     %tr{class: cycle("even", "odd")}
-      %td.date= match.occured_at.strftime("%Y-%m-%d")
+      %td.date= match.occurred_at.strftime("%Y-%m-%d")
       %td= match.winner.display_name
       %td= match.loser.display_name
       %td.action

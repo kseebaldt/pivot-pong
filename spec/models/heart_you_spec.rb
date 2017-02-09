@@ -14,24 +14,24 @@ describe HeartYou do
   describe "#eligible" do
     let(:you) { Player.create(name: "you") }
     it "should be eligible if your last 3 matches logged were with the same person" do
-      create(:match, winner: create(:player), loser: me, occured_at: 4.days.ago)
-      create(:match, winner: me, loser: you, occured_at: 3.days.ago)
-      create(:match, winner: me, loser: you, occured_at: 2.days.ago)
-      create(:match, winner: me, loser: you, occured_at: 1.days.ago)
+      create(:match, winner: create(:player), loser: me, occurred_at: 4.days.ago)
+      create(:match, winner: me, loser: you, occurred_at: 3.days.ago)
+      create(:match, winner: me, loser: you, occurred_at: 2.days.ago)
+      create(:match, winner: me, loser: you, occurred_at: 1.days.ago)
       expect(HeartYou.eligible?(me)).to be true
       expect(HeartYou.eligible?(you)).to be true
     end
 
     it "should not be eligible if less than 3 matches are logged" do
-      create(:match, winner: me, loser: you, occured_at: 2.days.ago)
-      create(:match, winner: me, loser: you, occured_at: 1.days.ago)
+      create(:match, winner: me, loser: you, occurred_at: 2.days.ago)
+      create(:match, winner: me, loser: you, occurred_at: 1.days.ago)
       expect(HeartYou.eligible?(me)).to be false
     end
 
     it "should not be eligible if you played more than one different opponent over your last 3 matches" do
-      create(:match, winner: me, loser: you, occured_at: 3.days.ago)
-      create(:match, winner: me, loser: you, occured_at: 2.days.ago)
-      create(:match, winner: me, loser: create(:player), occured_at: 1.days.ago)
+      create(:match, winner: me, loser: you, occurred_at: 3.days.ago)
+      create(:match, winner: me, loser: you, occurred_at: 2.days.ago)
+      create(:match, winner: me, loser: create(:player), occurred_at: 1.days.ago)
       expect(HeartYou.eligible?(me)).to be false
     end
   end

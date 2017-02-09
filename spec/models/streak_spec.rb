@@ -15,21 +15,21 @@ describe Streak do
     let(:you) { Player.create(name: "you") }
 
     it "should be eligible if you win 5 matches in a row" do
-      create(:match, winner: me, loser: you, occured_at: 5.days.ago)
-      create(:match, winner: me, loser: you, occured_at: 4.days.ago)
-      create(:match, winner: me, loser: you, occured_at: 3.days.ago)
-      create(:match, winner: me, loser: you, occured_at: 2.days.ago)
-      create(:match, winner: me, loser: you, occured_at: 1.days.ago)
+      create(:match, winner: me, loser: you, occurred_at: 5.days.ago)
+      create(:match, winner: me, loser: you, occurred_at: 4.days.ago)
+      create(:match, winner: me, loser: you, occurred_at: 3.days.ago)
+      create(:match, winner: me, loser: you, occurred_at: 2.days.ago)
+      create(:match, winner: me, loser: you, occurred_at: 1.days.ago)
       expect(Streak.eligible?(me)).to be true
       expect(Streak.eligible?(you)).to be false
     end
 
     it "should be not eligible if you don't win 5 matches in a row" do
-      create(:match, winner: me, loser: you, occured_at: 5.days.ago)
-      create(:match, winner: me, loser: you, occured_at: 4.days.ago)
-      create(:match, winner: you, loser: me, occured_at: 3.days.ago)
-      create(:match, winner: me, loser: you, occured_at: 2.days.ago)
-      create(:match, winner: me, loser: you, occured_at: 1.days.ago)
+      create(:match, winner: me, loser: you, occurred_at: 5.days.ago)
+      create(:match, winner: me, loser: you, occurred_at: 4.days.ago)
+      create(:match, winner: you, loser: me, occurred_at: 3.days.ago)
+      create(:match, winner: me, loser: you, occurred_at: 2.days.ago)
+      create(:match, winner: me, loser: you, occurred_at: 1.days.ago)
       expect(Streak.eligible?(me)).to be false
       expect(Streak.eligible?(you)).to be false
     end

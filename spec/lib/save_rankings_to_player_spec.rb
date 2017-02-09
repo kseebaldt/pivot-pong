@@ -27,7 +27,7 @@ describe SaveRankingsToPlayer do
     end
 
     context "when matches exists" do
-      let!(:m1) { create(:match, winner: p1, loser: p2, occured_at: 1.day.ago) }
+      let!(:m1) { create(:match, winner: p1, loser: p2, occurred_at: 1.day.ago) }
 
       it "assigns ranks for players in the match" do
         Player.update_all(:active => false)
