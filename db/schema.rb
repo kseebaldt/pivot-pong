@@ -11,19 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170209194842) do
+ActiveRecord::Schema.define(version: 20170209234227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "achievements", force: :cascade do |t|
     t.integer  "player_id"
-    t.string   "title",       limit: 255
-    t.text     "description"
-    t.string   "badge",       limit: 255
-    t.string   "type",        limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "type",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "match_id"
   end
 

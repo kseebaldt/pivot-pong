@@ -1,17 +1,17 @@
 class HeartYou < Achievement
+  def title
+    "I Heart You"
+  end
+
+  def description
+    "Last 3 logged matches were with the same person"
+  end
+
+  def badge
+    "fa fa-heart"
+  end
+
   class << self
-    def title
-      "I Heart You"
-    end
-
-    def description
-      "Last 3 logged matches were with the same person"
-    end
-
-    def badge
-      "fa fa-heart"
-    end
-
     def eligible?(player)
       last_3_matches = player.matches.descending.limit(3)
       return false if last_3_matches.size < 3

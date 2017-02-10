@@ -1,17 +1,17 @@
 class OverlyAttached < Achievement
+  def title
+    "Overly Attached"
+  end
+
+  def description
+    "Last 6 matches were with the same person"
+  end
+
+  def badge
+    "fa fa-magnet"
+  end
+
   class << self
-    def title
-      "Overly Attached"
-    end
-
-    def description
-      "Last 6 matches were with the same person"
-    end
-
-    def badge
-      "fa fa-magnet"
-    end
-
     def eligible?(player)
       last_6_matches = player.matches.descending.limit(6)
       return false if last_6_matches.size < 6
