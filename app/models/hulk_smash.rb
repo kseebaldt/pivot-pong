@@ -1,17 +1,17 @@
 class HulkSmash < Achievement
-  def title
-    "Hulk Smash"
-  end
-
-  def description
-    "Overall win record vs. someone spreads 10 or more"
-  end
-
-  def badge
-    "fa fa-legal"
-  end
-
   class << self
+    def title
+      "Hulk Smash"
+    end
+
+    def description
+      "Overall win record vs. someone spreads 10 or more"
+    end
+
+    def badge
+      "fa fa-legal"
+    end
+
     def eligible?(player)
       previous_match = player.most_recent_match
       winner_id = previous_match.winner.id
