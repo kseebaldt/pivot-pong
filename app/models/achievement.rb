@@ -40,4 +40,8 @@ class Achievement < ActiveRecord::Base
   def badge
     self.class.badge
   end
+
+  def slug
+    self.class.slug
+  end
 end
