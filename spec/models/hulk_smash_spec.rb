@@ -2,17 +2,22 @@ require 'rails_helper'
 
 describe HulkSmash do
   let(:me) { Player.create(name: "me") }
+  let(:you) { Player.create(name: "you") }
+
+  it "should have a class level description" do
+    expect(HulkSmash.description).to eq "Overall win record vs. someone spreads 10 or more"
+  end
 
   it "should populate achievement specific attributes to achievement on create" do
     achievement = nil
-    expect { achievement = HulkSmash.create(player: me) }.to change(me.achievements, :count).by(1)
+    match = create(:match, winner: me, loser: you)
+    expect { achievement = HulkSmash.create(player: me, match: match) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "Hulk Smash"
-    expect(achievement.description).to eq "Overall win record vs. someone spreads 10 or more"
+    expect(achievement.description).to eq "Overall win record vs. someone spreads 10 or more. Smashed you!"
     expect(achievement.badge).to eq "fa fa-legal"
   end
 
   describe "#eligible" do
-    let(:you) { Player.create(name: "you") }
     it "should be eligible if you have won 10 more matches vs your opponent than they have vs you" do
       create(:match, winner: you, loser: me, occurred_at: 12.days.ago)
       create(:match, winner: me, loser: you, occurred_at: 11.days.ago)

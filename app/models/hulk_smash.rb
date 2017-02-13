@@ -23,4 +23,8 @@ class HulkSmash < Achievement
       (player_wins - opponent_wins) > 9
     end
   end
+
+  def description
+    self.class.description + '. Smashed ' + match.loser.name + '!';
+  end
 end

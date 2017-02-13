@@ -16,4 +16,9 @@ class WelcomeMat < Achievement
       player.most_recent_opponent.matches.size == 1
     end
   end
+
+  def description
+    opponent = match.winner == player ? match.loser.name : match.winner.name
+    "Welcomed " + opponent + " to the ladder!"
+  end
 end

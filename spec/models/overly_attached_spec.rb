@@ -2,12 +2,18 @@ require 'rails_helper'
 
 describe OverlyAttached do
   let(:me) { Player.create(name: "me") }
+  let(:him) { create(:player, name: "him") }
+
+  it "should have a class level description" do
+    expect(OverlyAttached.description).to eq "Last 6 matches were with the same person"
+  end
 
   it "should populate achievement specific attributes to achievement on create" do
     achievement = nil
-    expect { achievement = OverlyAttached.create(player: me) }.to change(me.achievements, :count).by(1)
+    match = create(:match, winner: me, loser: him)
+    expect { achievement = OverlyAttached.create(player: me, match: match) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "Overly Attached"
-    expect(achievement.description).to eq "Last 6 matches were with the same person"
+    expect(achievement.description).to eq "Last 6 matches were with him"
     expect(achievement.badge).to eq "fa fa-magnet"
   end
 

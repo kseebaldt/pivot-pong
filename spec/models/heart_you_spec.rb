@@ -2,17 +2,22 @@ require 'rails_helper'
 
 describe HeartYou do
   let(:me) { Player.create(name: "me") }
+  let(:you) { Player.create(name: "you") }
+
+  it "should have a class level description" do
+    expect(HeartYou.description).to eq "Last 3 logged matches were with the same person"
+  end
 
   it "should populate achievement specific attributes to achievement on create" do
     achievement = nil
-    expect { achievement = HeartYou.create(player: me) }.to change(me.achievements, :count).by(1)
+    match = create(:match, winner: me, loser: you)
+    expect { achievement = HeartYou.create(player: me, match: match) }.to change(me.achievements, :count).by(1)
     expect(achievement.title).to eq "I Heart You"
-    expect(achievement.description).to eq "Last 3 logged matches were with the same person"
+    expect(achievement.description).to eq "Last 3 logged matches were with you"
     expect(achievement.badge).to eq "fa fa-heart"
   end
 
   describe "#eligible" do
-    let(:you) { Player.create(name: "you") }
     it "should be eligible if your last 3 matches logged were with the same person" do
       create(:match, winner: create(:player), loser: me, occurred_at: 4.days.ago)
       create(:match, winner: me, loser: you, occurred_at: 3.days.ago)

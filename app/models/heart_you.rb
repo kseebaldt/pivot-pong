@@ -24,4 +24,9 @@ class HeartYou < Achievement
       return unique_players.size == 2
     end
   end
+
+  def description
+    opponent = match.winner == player ? match.loser.name : match.winner.name
+    "Last 3 logged matches were with " + opponent
+  end
 end
