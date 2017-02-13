@@ -25,7 +25,7 @@ class Achievement < ActiveRecord::Base
     end
 
     def slug
-      self.class.to_s.underscore
+      to_s.underscore
     end
   end
 
@@ -42,6 +42,6 @@ class Achievement < ActiveRecord::Base
   end
 
   def slug
-    self.class.slug
+    self.class.to_s.underscore
   end
 end
