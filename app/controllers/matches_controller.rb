@@ -8,6 +8,7 @@ class MatchesController < ApplicationController
 
     if error_message
       flash.alert = error_message
+      redirect_to matches_path and return
     end
 
     redirect_to matches_path(d: true)

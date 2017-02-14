@@ -61,10 +61,11 @@ describe MatchesController do
       expect(flash.alert).to be_nil
     end
 
-    it 'tells the user about errors' do
+    it 'tells the user about errors and redirects without showing achievements earned' do
       expect(MatchRecorder).to receive(:record) { 'Error: Error' }
       post :create, match_params
       expect(flash.alert).to eq('Error: Error')
+      expect(response).to redirect_to(matches_path)
     end
   end
 
