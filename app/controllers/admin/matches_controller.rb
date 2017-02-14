@@ -13,18 +13,15 @@ class Admin::MatchesController < Admin::BaseController
 
   def update
     @match = Match.find params[:id]
-    winner = Player.lookup(params[:winner_name])
-    loser = Player.lookup(params[:loser_name])
     occurred_at = params.fetch(:match, {}).fetch(:occurred_at, @match.occurred_at)
+    error_message = MatchRecorder.update(match: @match, winner: params[:winner_name], loser: params[:loser_name], occurred_at: occurred_at)
 
-    if @match.update_attributes winner: winner, loser: loser, occurred_at: occurred_at
-      MatchObserver.after_save @match
-      flash.notice = "Match successfully updated"
-      redirect_to admin_matches_path
-    else
-      flash.alert = @match.errors.full_messages.join(', ')
-      render :edit
+    if error_message
+      flash.alert = error_message
+      render :edit and return
     end
+
+    redirect_to admin_matches_path
   end
 
   def create

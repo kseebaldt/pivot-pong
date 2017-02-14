@@ -28,7 +28,7 @@ describe Admin::MatchesController do
   end
 
   describe "#edit" do
-    it "should delete a match" do
+    it "should edit a match" do
       match = create :match, winner: p1, loser: p2
       get :edit, id: match.id
       expect(assigns[:match]).to eq match
@@ -41,6 +41,14 @@ describe Admin::MatchesController do
       post :update, id: match.id, winner_name: p2.display_name, loser_name: p1.display_name
       expect(match.reload.winner).to eq p2
       expect(response).to redirect_to admin_matches_path
+    end
+
+    it "should display error messages" do
+      match = create :match, winner: p1, loser: p2
+      post :update, id: match.id, winner_name: p2.display_name, loser_name: ''
+      expect(match.reload.winner).to eq p1
+      expect(match.reload.loser).to eq p2
+      expect(response).not_to redirect_to admin_matches_path
     end
   end
 end

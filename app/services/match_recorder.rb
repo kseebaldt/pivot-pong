@@ -20,6 +20,23 @@ module MatchRecorder
     end
   end
 
+  def self.update(match:, winner:, loser:, occurred_at:)
+    if winner == '' || loser == ''
+      return 'Must specify a winner and a loser to update a match.'
+    end
+
+    winning_player = get_player(winner)
+    losing_player = get_player(loser)
+
+    success = match.update_attributes(winner: winning_player, loser: losing_player, occurred_at: occurred_at)
+    if success
+      MatchObserver.after_save(match)
+      nil
+    else
+      match.errors.full_messages.join("\n")
+    end
+  end
+
   class << self
     private
 
