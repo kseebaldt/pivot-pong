@@ -19,6 +19,6 @@ class WelcomeMat < Achievement
 
   def description
     opponent = match.winner == player ? match.loser.name : match.winner.name
-    "Welcomed " + opponent + " to the ladder!"
+    "Welcomed #{opponent} to the ladder!"
   end
 end

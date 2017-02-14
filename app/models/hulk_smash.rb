@@ -25,6 +25,6 @@ class HulkSmash < Achievement
   end
 
   def description
-    self.class.description + '. Smashed ' + match.loser.name + '!';
+    "#{self.class.description}. Smashed #{match.loser.name}!";
   end
 end

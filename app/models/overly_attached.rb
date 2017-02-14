@@ -27,6 +27,6 @@ class OverlyAttached < Achievement
 
   def description
     opponent = match.winner == player ? match.loser.name : match.winner.name
-    "Last 6 matches were with " + opponent
+    "Last 6 matches were with #{opponent}"
   end
 end
