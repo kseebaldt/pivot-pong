@@ -13,7 +13,7 @@ class Admin::MatchesController < Admin::BaseController
 
   def update
     @match = Match.find params[:id]
-    occurred_at = params.fetch(:match, {}).fetch(:occurred_at, @match.occurred_at)
+    occurred_at = params.fetch(:match, {})[:occurred_at]
     error_message = MatchRecorder.update(match: @match, winner: params[:winner_name], loser: params[:loser_name], occurred_at: occurred_at)
 
     if error_message

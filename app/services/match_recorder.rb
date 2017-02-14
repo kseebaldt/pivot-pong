@@ -25,6 +25,10 @@ module MatchRecorder
       return 'Must specify a winner and a loser to update a match.'
     end
 
+    if occurred_at.nil? || occurred_at == ''
+      occurred_at = match.occurred_at
+    end
+
     winning_player = get_player(winner)
     losing_player = get_player(loser)
 

@@ -127,6 +127,16 @@ describe MatchRecorder do
       expect(MatchObserver).not_to have_received(:after_save)
     end
 
+    it 'sets a default occurred_at to the current value for that match' do
+      match = create(:match, winner: me, loser: you, occurred_at: Time.new(2015, 1, 4))
+
+      errors = MatchRecorder.update(match: match, winner: 'you', loser: 'me', occurred_at: '')
+      expect(errors).to be_nil
+      expect(match.occurred_at).to eq(Time.new(2015, 1, 4))
+      expect(match.winner.name).to eq 'you'
+      expect(match.loser.name).to eq 'me'
+    end
+
     it 'tells the match observer about the new match' do
       match = create(:match, winner: me, loser: you, occurred_at: Time.new(2015, 1, 4))
 
