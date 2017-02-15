@@ -14,15 +14,19 @@ describe TwilightSaga do
   describe "#eligible" do
     let(:you) { Player.create(name: "you") }
     it "should be eligible if you Log a match before 6pm PST" do
-      create(:match, winner: me, loser: you, occurred_at: (Date.today.beginning_of_day + 19.hours))
-      expect(TwilightSaga.eligible?(me)).to be true
-      expect(TwilightSaga.eligible?(you)).to be true
+      travel_to Time.new(2014, 3, 2, 19, 30, 0) do
+        create(:match, winner: me, loser: you, occurred_at: (Date.today.beginning_of_day + 19.hours))
+        expect(TwilightSaga.eligible?(me)).to be true
+        expect(TwilightSaga.eligible?(you)).to be true
+      end
     end
 
-    it "should not be eligible if you Log a match after 9am PST" do
-      create(:match, winner: me, loser: you, occurred_at: (Date.today.beginning_of_day + 17.hours))
-      expect(MorningMadness.eligible?(me)).to be false
-      expect(MorningMadness.eligible?(you)).to be false
+    it "should not be eligible if you Log a match before 6pm PST" do
+      travel_to Time.new(2014, 3, 2, 19, 30, 0) do
+        create(:match, winner: me, loser: you, occurred_at: (Date.today.beginning_of_day + 17.hours))
+        expect(TwilightSaga.eligible?(me)).to be false
+        expect(TwilightSaga.eligible?(you)).to be false
+      end
     end
   end
 end
