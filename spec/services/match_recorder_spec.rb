@@ -15,7 +15,7 @@ describe MatchRecorder do
       end.to change(Player, :count).by(2)
 
       match = Match.last
-      expect(match.occurred_at).to eq(Time.new(2015, 1, 5))
+      expect(match.occurred_at).to eq(Time.parse('05 Jan 2015 00:00:00 PST -08:00'))
       expect(match.winner.name).to eq 'foo'
       expect(match.loser.name).to eq 'bar'
     end
@@ -132,13 +132,13 @@ describe MatchRecorder do
 
       expect do
         expect do
-          errors = MatchRecorder.update(match: match, winner: 'me', loser: 'him', occurred_at: '2015-01-05')
+          errors = MatchRecorder.update(match: match, winner: 'me', loser: 'him', occurred_at: '2015-01-05 11:30:00')
           expect(errors).to be_nil
         end.not_to change(Match, :count)
       end.to change(Player, :count).by(1)
 
       match = Match.last
-      expect(match.occurred_at).to eq(Time.new(2015, 1, 5))
+      expect(match.occurred_at).to eq(Time.parse('05 Jan 2015 11:30:00 PST -08:00'))
       expect(match.winner.name).to eq 'me'
       expect(match.loser.name).to eq 'him'
     end
