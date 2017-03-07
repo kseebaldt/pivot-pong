@@ -13,15 +13,15 @@ class PlayersController < ApplicationController
 
   def update
     @player = Player.find(params[:id])
-    if @player.update_attributes(params[:player])
+    if @player.update_attributes(params.require(:player).permit(:avatar))
       flash.notice = "Lookin' good, good lookin'"
-      if !@player.achievements.map(&:class).include?(PicturePerfect) && @player.avatar?
+      if !@player.has_achievement?(PicturePerfect) && @player.avatar?
         achievement = PicturePerfect.create(player: @player)
       end
     else
-      flash.error = "No bueno"
+      flash[:alert] = "No bueno"
     end
-    redirect_to player_path(@player, a: achievement.id)
+    redirect_to player_path(@player, a: achievement.try(:id))
   end
 
   def odds

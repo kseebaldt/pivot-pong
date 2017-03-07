@@ -1,3 +1,4 @@
+puts "Using #{MiniMagick.cli}"
 CarrierWave.configure do |config|
   if ['development', 'test'].include?(Rails.env)
     config.storage = :file

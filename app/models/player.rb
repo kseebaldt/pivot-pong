@@ -55,6 +55,10 @@ class Player < ActiveRecord::Base
     Match.where("winner_id = ? OR loser_id = ?", id, id)
   end
 
+  def has_achievement?(klazz)
+    achievements.map(&:class).include?(klazz)
+  end
+
   private
 
   def clear_ranks_for_inactive_players

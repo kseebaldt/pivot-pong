@@ -54,4 +54,15 @@ describe PlayersController do
       expect(response.body).to eq '100'
     end
   end
+
+  describe "#update" do
+    it "should update a player" do
+      player = Player.create name: "foo"
+      expect(player.reload.avatar?).to be(false)
+      put :update, id: player.id, player: {avatar: Rack::Test::UploadedFile.new(File.expand_path("../../fixtures/test.jpg", __FILE__), "image/jpeg")}
+      expect(player.reload.avatar?).to be(true)
+      expect(player).to have_achievement(PicturePerfect)
+      expect(flash[:error]).to be_nil
+    end
+  end
 end
