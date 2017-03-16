@@ -18,9 +18,9 @@ ActiveRecord::Schema.define(version: 20170209234227) do
 
   create_table "achievements", force: :cascade do |t|
     t.integer  "player_id"
-    t.string   "type",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "match_id"
   end
 
@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(version: 20170209234227) do
     t.float    "average_games_per_player"
     t.integer  "match_count"
     t.date     "date"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "logs", force: :cascade do |t|
@@ -42,34 +42,34 @@ ActiveRecord::Schema.define(version: 20170209234227) do
   end
 
   create_table "matches", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "occurred_at"
     t.integer  "winner_id"
     t.integer  "loser_id"
   end
 
   create_table "players", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "rank"
-    t.boolean  "active",                 default: true
-    t.string   "avatar",     limit: 255
+    t.boolean  "active",     default: true
+    t.string   "avatar"
   end
 
   create_table "posts", force: :cascade do |t|
-    t.string   "title",      limit: 255
+    t.string   "title"
     t.text     "body"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "site_settings", force: :cascade do |t|
-    t.string   "setting_type", limit: 255
-    t.string   "value",        limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "setting_type"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "totems", force: :cascade do |t|

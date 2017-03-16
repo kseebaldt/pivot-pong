@@ -299,6 +299,9 @@ marquee {
 .achievements {
   td, th {
     text-align: left;
+    &.icon  {
+      width: 100px;
+      text-align: center;  }
   }
 }
 
